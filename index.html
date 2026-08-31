@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PC Game Library</title>
+    <style>
+        :root {
+            --bg: #121214;
+            --card-bg: #202024;
+            --text: #e1e1e6;
+            --accent-green: #00b37e;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+        }
+
+        header {
+            max-width: 1200px;
+            margin: 0 auto 20px auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            border-bottom: 1px solid #323238;
+            padding-bottom: 20px;
+        }
+
+        .brand-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .custom-logo {
+            width: 70px;
+            height: 70px;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3QgeD0iMTAiIHk9IjEwIiB3aWR0aD0iODAiIGhlaWdodD0iODAiIGZpbGw9IiMwMGIzN2UiIHJ4PSI4Ii8+PHRleHQgeD0iNTAiIHk9IjYwIiBmb250LXNpemU9IjQ4IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+VDwvdGV4dD48L3N2Zz4=');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .title-wrapper {
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1 { 
+            margin: 0; 
+            font-size: 1.8rem; 
+            font-weight: 700; 
+        }
+
+        .pricing-subtitle {
+            margin-top: 3px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--accent-green);
+            letter-spacing: 0.5px;
+        }
+
+        .search-box {
+            padding: 10px 16px;
+            width: 300px;
+            border-radius: 8px;
+            border: 1px solid #323238;
+            background-color: #121214;
+            color: var(--text);
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        .search-box:focus {
+            border-color: var(--accent-green);
+        }
+
+        .tabs-container {
+            max-width: 1200px;
+            margin: 0 auto 20px auto;
+            display: flex;
+            gap: 10px;
+        }
+
+        .tab-btn {
+            background-color: var(--card-bg);
+            color: var(--text);
+            border: 1px solid #323238;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        .tab-btn.active {
+            background-color: var(--accent-green);
+            color: #fff;
+            border-color: var(--accent-green);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+        }
+
+        .cover-wrapper {
+            width: 100%;
+            aspect-ratio: 2/3;
+            overflow: hidden;
+            background-color: #29292e;
+        }
+
+        .cover-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .title {
+            padding: 12px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        footer {
+            max-width: 1200px;
+            margin: 40px auto 10px auto;
+            text-align: center;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            color: #8d8d99;
+            border-top: 1px solid #323238;
+            padding-top: 15px;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="brand-container">
+            <div class="custom-logo" title="TechEpic"></div>
+            <div class="title-wrapper">
+                <h1>PC Game Library (<span id="count">0</span>)</h1>
+                <div class="pricing-subtitle">1 Game = 1$, 3 Games = 2$</div>
+            </div>
+        </div>
+        <input type="text" id="search" class="search-box" placeholder="Search games..." onkeyup="filterGames()">
+    </header>
+
+    <div class="tabs-container">
+        <button class="tab-btn active" id="tab-all" onclick="switchTab('all')">All Games</button>
+        <button class="tab-btn" id="tab-recent" onclick="switchTab('recent')">Recently Added</button>
+    </div>
+
+    <div class="grid" id="gameGrid">
+
+        <div class="card" data-title="007 first light = 53.3g" data-ctime="1785841441.2481618">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/9cd0f2a7c17876d6721916f09bce496c.png" alt="007 First Light = 53.3G" loading="lazy">
+            </div>
+            <div class="title" title="007 First Light = 53.3G">007 First Light = 53.3G</div>
+        </div>
+        <div class="card" data-title="a plague tale innocence = 41.6g" data-ctime="1785993025.9024687">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/thumb/e52bee9fdf30c1a7b287f6f7b2a3e61b.jpg" alt="A Plague Tale Innocence = 41.6G" loading="lazy">
+            </div>
+            <div class="title" title="A Plague Tale Innocence = 41.6G">A Plague Tale Innocence = 41.6G</div>
+        </div>
+        <div class="card" data-title="a plague tale requiem = 47.4g" data-ctime="1785992886.4703379">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/thumb/d35e35d7ff517c25fd855cf08bc95d3c.jpg" alt="A Plague Tale Requiem = 47.4G" loading="lazy">
+            </div>
+            <div class="title" title="A Plague Tale Requiem = 47.4G">A Plague Tale Requiem = 47.4G</div>
+        </div>
+        <div class="card" data-title="age of empires ii definitive edition = 85.5g" data-ctime="1786000902.6266904">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/77fb534c73679ddb543437d0b3db77c4.jpg" alt="Age of Empires II Definitive Edition = 85.5G" loading="lazy">
+            </div>
+            <div class="title" title="Age of Empires II Definitive Edition = 85.5G">Age of Empires II Definitive Edition = 85.5G</div>
+        </div>
+        <div class="card" data-title="assassin's creed - odyssey = 105.9g" data-ctime="1785830971.6872895">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/132d16811e7db45a5c501541c275851c.png" alt="Assassin's Creed - Odyssey = 105.9G" loading="lazy">
+            </div>
+            <div class="title" title="Assassin's Creed - Odyssey = 105.9G">Assassin's Creed - Odyssey = 105.9G</div>
+        </div>
+        <div class="card" data-title="assassins creed black flag resynced = 67.8g" data-ctime="1786846652.6141942">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/a9f7e2af063303f02fd5d479c8816c79.png" alt="Assassins Creed Black Flag Resynced = 67.8G" loading="lazy">
+            </div>
+            <div class="title" title="Assassins Creed Black Flag Resynced = 67.8G">Assassins Creed Black Flag Resynced = 67.8G</div>
+        </div>
+        <div class="card" data-title="assassins creed mirage = 65.1g" data-ctime="1785831103.7499597">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/b00be8459cbd14caad11bf6c22c1dc2b.png" alt="Assassins Creed Mirage = 65.1G" loading="lazy">
+            </div>
+            <div class="title" title="Assassins Creed Mirage = 65.1G">Assassins Creed Mirage = 65.1G</div>
+        </div>
+        <div class="card" data-title="assassins creed shadows = 175.1g" data-ctime="1785834378.7368896">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/fc16eb2e13f50f6905393c474820bbd8.png" alt="Assassins Creed Shadows = 175.1G" loading="lazy">
+            </div>
+            <div class="title" title="Assassins Creed Shadows = 175.1G">Assassins Creed Shadows = 175.1G</div>
+        </div>
+        <div class="card" data-title="assassins creed valhalla = 143.4g" data-ctime="1786008158.4443915">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/e2ea9e1f3d2660dc641143e35e7e6767.png" alt="Assassins Creed Valhalla = 143.4G" loading="lazy">
+            </div>
+            <div class="title" title="Assassins Creed Valhalla = 143.4G">Assassins Creed Valhalla = 143.4G</div>
+        </div>
+        <div class="card" data-title="assetto corsa = 44.2g" data-ctime="1785920651.228078">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/542c851650c2c1962d8c852785477ae4.png" alt="Assetto Corsa = 44.2G" loading="lazy">
+            </div>
+            <div class="title" title="Assetto Corsa = 44.2G">Assetto Corsa = 44.2G</div>
+        </div>
+    </div>
+
+    <footer>© 2026 TechEpic PC Game Library</footer>
+
+    <script>
+        function updateGameCount() {
+            const count = document.querySelectorAll('.card:not([style*="display: none"])').length;
+            document.getElementById('count').textContent = count;
+        }
+
+        function filterGames() {
+            const searchInput = document.getElementById('search').value.toLowerCase();
+            const cards = document.querySelectorAll('.card');
+            
+            cards.forEach(card => {
+                const title = card.getAttribute('data-title').toLowerCase();
+                if (title.includes(searchInput)) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            updateGameCount();
+        }
+
+        function switchTab(tab) {
+            const cards = document.querySelectorAll('.card');
+            const tabAll = document.getElementById('tab-all');
+            const tabRecent = document.getElementById('tab-recent');
+            const now = Date.now() / 1000;
+            const sevenDaysAgo = now - (7 * 24 * 60 * 60);
+            
+            if (tab === 'all') {
+                cards.forEach(card => card.style.display = '');
+                tabAll.classList.add('active');
+                tabRecent.classList.remove('active');
+            } else if (tab === 'recent') {
+                cards.forEach(card => {
+                    const ctime = parseFloat(card.getAttribute('data-ctime'));
+                    card.style.display = ctime > sevenDaysAgo ? '' : 'none';
+                });
+                tabRecent.classList.add('active');
+                tabAll.classList.remove('active');
+            }
+            
+            updateGameCount();
+        }
+
+        // Initialize count on page load
+        window.addEventListener('load', updateGameCount);
+    </script>
+
+</body>
+</html>
