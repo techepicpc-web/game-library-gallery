@@ -1,0 +1,1621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PC Game Library</title>
+    <style>
+        :root {
+            --bg: #121214;
+            --card-bg: #202024;
+            --text: #e1e1e6;
+            --accent-green: #00b37e;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+        }
+
+        header {
+            max-width: 1200px;
+            margin: 0 auto 20px auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            border-bottom: 1px solid #323238;
+            padding-bottom: 20px;
+        }
+
+        .brand-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .custom-logo {
+            width: 70px;
+            height: 70px;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgICAgIDxyZWN0IHg9IjEwIiB5PSIxMCIgd2lkdGg9IjgwIiBoZWlnaHQ9IjgwIiBmaWxsPSJub25lIiBzdHJva2U9IiNlMWUxZTYiIHN0cm9rZS13aWR0aD0iMi41Ii8+CiAgICAgIDx0ZXh0IHg9IjUwIiB5PSI0MiIgZm9udC1mYW1pbHk9IidTZWdvZSBVSScsIEFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iYm9sZCIgZm9udC1zaXplPSIzNiIgZmlsbD0iI2UxZTFlNiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+VDwvdGV4dD4KICAgICAgPHRleHQgeD0iNTAiIHk9IjY4IiBmb250LWZhbWlseT0iJ1NlZ29lIFVJJywgQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSI2MDAiIGZvbnQtc2l6ZT0iMTMiIGZpbGw9IiNlMWUxZTYiIHRleHQtYW5jaG9yPSJtaWRkbGUiPlRlY2hFcGljPC90ZXh0PgogICAgPC9zdmc+');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .title-wrapper {
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1 { 
+            margin: 0; 
+            font-size: 1.8rem; 
+            font-weight: 700; 
+        }
+
+        .pricing-subtitle {
+            margin-top: 3px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--accent-green);
+            letter-spacing: 0.5px;
+        }
+
+        .search-box {
+            padding: 10px 16px;
+            width: 300px;
+            border-radius: 8px;
+            border: 1px solid #323238;
+            background-color: #121214;
+            color: var(--text);
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        .search-box:focus {
+            border-color: var(--accent-green);
+        }
+
+        .tabs-container {
+            max-width: 1200px;
+            margin: 0 auto 20px auto;
+            display: flex;
+            gap: 10px;
+        }
+
+        .tab-btn {
+            background-color: var(--card-bg);
+            color: var(--text);
+            border: 1px solid #323238;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        .tab-btn.active {
+            background-color: var(--accent-green);
+            color: #fff;
+            border-color: var(--accent-green);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+        }
+
+        .cover-wrapper {
+            width: 100%;
+            aspect-ratio: 2/3;
+            overflow: hidden;
+            background-color: #29292e;
+        }
+
+        .cover-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .title {
+            padding: 12px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        footer {
+            max-width: 1200px;
+            margin: 40px auto 10px auto;
+            text-align: center;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            color: #8d8d99;
+            border-top: 1px solid #323238;
+            padding-top: 15px;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="brand-container">
+            <div class="custom-logo" title="TechEpic"></div>
+            <div class="title-wrapper">
+                <h1>PC Game Library (<span id="count">0</span>)</h1>
+                <div class="pricing-subtitle">1 Game = 1$, 3 Games = 2$</div>
+            </div>
+        </div>
+        <input type="text" id="search" class="search-box" placeholder="Search games..." onkeyup="filterGames()">
+    </header>
+
+    <div class="tabs-container">
+        <button class="tab-btn active" id="tab-all" onclick="switchTab('all')">All Games</button>
+        <button class="tab-btn" id="tab-recent" onclick="switchTab('recent')">Recently Added</button>
+    </div>
+
+    <div class="grid" id="gameGrid">
+
+        <div class="card" data-title="007 first light = 53.3g" data-ctime="1785841441.2481618">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/9cd0f2a7c17876d6721916f09bce496c.png" alt="007 First Light = 53.3G" loading="lazy">
+            </div>
+            <div class="title" title="007 First Light = 53.3G">007 First Light = 53.3G</div>
+        </div>
+        <div class="card" data-title="a plague tale innocence = 41.6g" data-ctime="1785993025.9024687">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/thumb/e52bee9fdf30c1a7b287f6f7b2a3e61b.jpg" alt="A Plague Tale Innocence = 41.6G" loading="lazy">
+            </div>
+            <div class="title" title="A Plague Tale Innocence = 41.6G">A Plague Tale Innocence = 41.6G</div>
+        </div>
+        <div class="card" data-title="a plague tale requiem = 47.4g" data-ctime="1785992886.4703379">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/thumb/d35e35d7ff517c25fd855cf08bc95d3c.jpg" alt="A Plague Tale Requiem = 47.4G" loading="lazy">
+            </div>
+            <div class="title" title="A Plague Tale Requiem = 47.4G">A Plague Tale Requiem = 47.4G</div>
+        </div>
+        <div class="card" data-title="age of empires ii definitive edition = 85.5g" data-ctime="1786000902.6266904">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/77fb534c73679ddb543437d0b3db77c4.jpg" alt="Age of Empires II Definitive Edition = 85.5G" loading="lazy">
+            </div>
+            <div class="title" title="Age of Empires II Definitive Edition = 85.5G">Age of Empires II Definitive Edition = 85.5G</div>
+        </div>
+        <div class="card" data-title="assassin's creed - odyssey = 105.9g" data-ctime="1785830971.6872895">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/132d16811e7db45a5c501541c275851c.png" alt="Assassin's Creed - Odyssey = 105.9G" loading="lazy">
+            </div>
+            <div class="title" title="Assassin's Creed - Odyssey = 105.9G">Assassin's Creed - Odyssey = 105.9G</div>
+        </div>
+        <div class="card" data-title="assassins creed black flag resynced = 67.8g" data-ctime="1786846652.6141942">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/a9f7e2af063303f02fd5d479c8816c79.png" alt="Assassins Creed Black Flag Resynced = 67.8G" loading="lazy">
+            </div>
+            <div class="title" title="Assassins Creed Black Flag Resynced = 67.8G">Assassins Creed Black Flag Resynced = 67.8G</div>
+        </div>
+        <div class="card" data-title="assassins creed mirage = 65.1g" data-ctime="1785831103.7499597">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/b00be8459cbd14caad11bf6c22c1dc2b.png" alt="Assassins Creed Mirage = 65.1G" loading="lazy">
+            </div>
+            <div class="title" title="Assassins Creed Mirage = 65.1G">Assassins Creed Mirage = 65.1G</div>
+        </div>
+        <div class="card" data-title="assassins creed shadows = 175.1g" data-ctime="1785834378.7368896">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/fc16eb2e13f50f6905393c474820bbd8.png" alt="Assassins Creed Shadows = 175.1G" loading="lazy">
+            </div>
+            <div class="title" title="Assassins Creed Shadows = 175.1G">Assassins Creed Shadows = 175.1G</div>
+        </div>
+        <div class="card" data-title="assassins creed valhalla = 143.4g" data-ctime="1786008158.4443915">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/e2ea9e1f3d2660dc641143e35e7e6767.png" alt="Assassins Creed Valhalla = 143.4G" loading="lazy">
+            </div>
+            <div class="title" title="Assassins Creed Valhalla = 143.4G">Assassins Creed Valhalla = 143.4G</div>
+        </div>
+        <div class="card" data-title="assetto corsa = 44.2g" data-ctime="1785920651.228078">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/542c851650c2c1962d8c852785477ae4.png" alt="Assetto Corsa = 44.2G" loading="lazy">
+            </div>
+            <div class="title" title="Assetto Corsa = 44.2G">Assetto Corsa = 44.2G</div>
+        </div>
+        <div class="card" data-title="avatar frontiers of pandora = 125.7g" data-ctime="1785908156.1760316">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/0608e6241fcd68f251d8685af6e6b4cf.png" alt="Avatar Frontiers of Pandora = 125.7G" loading="lazy">
+            </div>
+            <div class="title" title="Avatar Frontiers of Pandora = 125.7G">Avatar Frontiers of Pandora = 125.7G</div>
+        </div>
+        <div class="card" data-title="batman - arkham knight = 54.1g" data-ctime="1786069249.79322">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/f84188cb2659a5c8c875d7f0e9fc847c.jpg" alt="Batman - Arkham Knight = 54.1G" loading="lazy">
+            </div>
+            <div class="title" title="Batman - Arkham Knight = 54.1G">Batman - Arkham Knight = 54.1G</div>
+        </div>
+        <div class="card" data-title="batman arkham city goty = 16.9g" data-ctime="1786069560.7777133">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/bfc205b508e5db258232dd4fe426987b.png" alt="Batman Arkham City GOTY = 16.9G" loading="lazy">
+            </div>
+            <div class="title" title="Batman Arkham City GOTY = 16.9G">Batman Arkham City GOTY = 16.9G</div>
+        </div>
+        <div class="card" data-title="batman arkham origins = 25.2g" data-ctime="1786008548.5874906">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/2a17dafef6f0b54770c97b59b51e28e2.png" alt="Batman Arkham Origins = 25.2G" loading="lazy">
+            </div>
+            <div class="title" title="Batman Arkham Origins = 25.2G">Batman Arkham Origins = 25.2G</div>
+        </div>
+        <div class="card" data-title="battlefield 6 = 102.4g" data-ctime="1785841503.258909">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/82e43901d337d05ef3ae610442c8606b.png" alt="Battlefield 6 = 102.4G" loading="lazy">
+            </div>
+            <div class="title" title="Battlefield 6 = 102.4G">Battlefield 6 = 102.4G</div>
+        </div>
+        <div class="card" data-title="beast of reincarnation = 31.9g" data-ctime="1785897248.368011">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/b1f3099dbc42710895ab03cd265badac.jpg" alt="Beast of Reincarnation = 31.9G" loading="lazy">
+            </div>
+            <div class="title" title="Beast of Reincarnation = 31.9G">Beast of Reincarnation = 31.9G</div>
+        </div>
+        <div class="card" data-title="biomutant = 25.3g" data-ctime="1785913091.4608128">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/65ef8f4998b8a5c48e5a2472dc138c69.png" alt="Biomutant = 25.3G" loading="lazy">
+            </div>
+            <div class="title" title="Biomutant = 25.3G">Biomutant = 25.3G</div>
+        </div>
+        <div class="card" data-title="blackmyth wukong = 141.1g" data-ctime="1785841623.6165323">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/thumb/294dbeaa35d3fd15a7eb0843e65272ee.jpg" alt="BlackMyth Wukong = 141.1G" loading="lazy">
+            </div>
+            <div class="title" title="BlackMyth Wukong = 141.1G">BlackMyth Wukong = 141.1G</div>
+        </div>
+        <div class="card" data-title="blur(tm)" data-ctime="1787117476.0622506">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/30e920df8099c4feb835211451c3aa62.png" alt="Blur(TM)" loading="lazy">
+            </div>
+            <div class="title" title="Blur(TM)">Blur(TM)</div>
+        </div>
+        <div class="card" data-title="borderlands 3 = 139.5g" data-ctime="1786008635.484569">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/c039e6496e67fdb3d46e6d5877e01ed2.png" alt="Borderlands 3 = 139.5G" loading="lazy">
+            </div>
+            <div class="title" title="Borderlands 3 = 139.5G">Borderlands 3 = 139.5G</div>
+        </div>
+        <div class="card" data-title="call of duty - modern warfare ii = 116.5g" data-ctime="1786009027.5072455">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/5cef43602bc7486da26ba5fbf4483f43.png" alt="Call of Duty - Modern Warfare II = 116.5G" loading="lazy">
+            </div>
+            <div class="title" title="Call of Duty - Modern Warfare II = 116.5G">Call of Duty - Modern Warfare II = 116.5G</div>
+        </div>
+        <div class="card" data-title="call of duty - modern warfare iii" data-ctime="1787193404.9544983">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/thumb/195937291747b2e880332a3c41d8a856.jpg" alt="Call of Duty - Modern Warfare III" loading="lazy">
+            </div>
+            <div class="title" title="Call of Duty - Modern Warfare III">Call of Duty - Modern Warfare III</div>
+        </div>
+        <div class="card" data-title="call of duty - modern warfare = 179.3g" data-ctime="1785906544.6281385">
+            <div class="cover-wrapper">
+                <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2000950/library_600x900.jpg" alt="Call of Duty - Modern Warfare = 179.3G" loading="lazy">
+            </div>
+            <div class="title" title="Call of Duty - Modern Warfare = 179.3G">Call of Duty - Modern Warfare = 179.3G</div>
+        </div>
+        <div class="card" data-title="call of duty advanced warfare = 43.9g" data-ctime="1785831182.2873492">
+            <div class="cover-wrapper">
+                <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/209650/library_600x900.jpg" alt="Call of Duty Advanced Warfare = 43.9G" loading="lazy">
+            </div>
+            <div class="title" title="Call of Duty Advanced Warfare = 43.9G">Call of Duty Advanced Warfare = 43.9G</div>
+        </div>
+        <div class="card" data-title="call of duty black ops 6 = 48.6g" data-ctime="1786007940.358932">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/thumb/a1aa2acf1f3eacd2cda1110a4f1aa410.jpg" alt="Call of Duty Black Ops 6 = 48.6G" loading="lazy">
+            </div>
+            <div class="title" title="Call of Duty Black Ops 6 = 48.6G">Call of Duty Black Ops 6 = 48.6G</div>
+        </div>
+        <div class="card" data-title="call of duty ghosts = 29.7g" data-ctime="1785906503.2463632">
+            <div class="cover-wrapper">
+                <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/209160/library_600x900.jpg" alt="Call of Duty Ghosts = 29.7G" loading="lazy">
+            </div>
+            <div class="title" title="Call of Duty Ghosts = 29.7G">Call of Duty Ghosts = 29.7G</div>
+        </div>
+        <div class="card" data-title="carx street = 19.3g" data-ctime="1785831236.4147696">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/d69f13938a56eb93a35705e17d34064b.png" alt="CarX Street = 19.3G" loading="lazy">
+            </div>
+            <div class="title" title="CarX Street = 19.3G">CarX Street = 19.3G</div>
+        </div>
+        <div class="card" data-title="castlevania lords of shadow 2 = 7.6g" data-ctime="1785831262.9007187">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/thumb/1d120c86144523926d4f638bab708ca8.jpg" alt="Castlevania Lords of Shadow 2 = 7.6G" loading="lazy">
+            </div>
+            <div class="title" title="Castlevania Lords of Shadow 2 = 7.6G">Castlevania Lords of Shadow 2 = 7.6G</div>
+        </div>
+        <div class="card" data-title="castlevania lords of shadow = 14.9g" data-ctime="1785831274.5532372">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/thumb/7b4eaedc069fb12ccde4ebe79d494dbc.jpg" alt="Castlevania Lords of Shadow = 14.9G" loading="lazy">
+            </div>
+            <div class="title" title="Castlevania Lords of Shadow = 14.9G">Castlevania Lords of Shadow = 14.9G</div>
+        </div>
+        <div class="card" data-title="clair obscur expedition 33 = 43.8g" data-ctime="1785831779.999045">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/e7fff0c2739cf86c8aa5559eefe74220.png" alt="Clair Obscur Expedition 33 = 43.8G" loading="lazy">
+            </div>
+            <div class="title" title="Clair Obscur Expedition 33 = 43.8G">Clair Obscur Expedition 33 = 43.8G</div>
+        </div>
+        <div class="card" data-title="crash bandicoot - n sane trilogy = 29.1g" data-ctime="1785912808.504657">
+            <div class="cover-wrapper">
+                <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/731490/library_600x900.jpg" alt="Crash Bandicoot - N Sane Trilogy = 29.1G" loading="lazy">
+            </div>
+            <div class="title" title="Crash Bandicoot - N Sane Trilogy = 29.1G">Crash Bandicoot - N Sane Trilogy = 29.1G</div>
+        </div>
+        <div class="card" data-title="crash bandicoot 4 = 23.4g" data-ctime="1785913704.864781">
+            <div class="cover-wrapper">
+                <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1378990/library_600x900.jpg" alt="Crash Bandicoot 4 = 23.4G" loading="lazy">
+            </div>
+            <div class="title" title="Crash Bandicoot 4 = 23.4G">Crash Bandicoot 4 = 23.4G</div>
+        </div>
+        <div class="card" data-title="crimson desert = 130.4g" data-ctime="1785897432.6582096">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/a2ea3ea9d01c17b87a65bc8e885015b5.png" alt="Crimson Desert = 130.4G" loading="lazy">
+            </div>
+            <div class="title" title="Crimson Desert = 130.4G">Crimson Desert = 130.4G</div>
+        </div>
+        <div class="card" data-title="cyberpunk 2077 = 91.8g" data-ctime="1785841788.8750906">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/thumb/f75e310a95c799cafb74a670426ef8bf.jpg" alt="CYBERPUNK 2077 = 91.8G" loading="lazy">
+            </div>
+            <div class="title" title="CYBERPUNK 2077 = 91.8G">CYBERPUNK 2077 = 91.8G</div>
+        </div>
+        <div class="card" data-title="dark souls iii = 25.0g" data-ctime="1786427324.9233756">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/9085f5ef67f2f7f0f38e869ffb5016a1.png" alt="Dark Souls III = 25.0G" loading="lazy">
+            </div>
+            <div class="title" title="Dark Souls III = 25.0G">Dark Souls III = 25.0G</div>
+        </div>
+        <div class="card" data-title="darksiders warmastered edition = 21.9g" data-ctime="1785837604.9220152">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/6537e13488b3ddb03c4a315ad2472194.png" alt="Darksiders Warmastered Edition = 21.9G" loading="lazy">
+            </div>
+            <div class="title" title="Darksiders Warmastered Edition = 21.9G">Darksiders Warmastered Edition = 21.9G</div>
+        </div>
+        <div class="card" data-title="darksidersgenesis = 10.1g" data-ctime="1785837633.4552524">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/1d91fd8cf40156dc1b696dc9359b5ddb.png" alt="DarksidersGenesis = 10.1G" loading="lazy">
+            </div>
+            <div class="title" title="DarksidersGenesis = 10.1G">DarksidersGenesis = 10.1G</div>
+        </div>
+        <div class="card" data-title="days gone = 62.8g" data-ctime="1786015329.5186098">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/d60a556b10d7313b7e4026b4b9a19f32.png" alt="Days Gone = 62.8G" loading="lazy">
+            </div>
+            <div class="title" title="Days Gone = 62.8G">Days Gone = 62.8G</div>
+        </div>
+        <div class="card" data-title="deadpool = 6.3g" data-ctime="1785837645.7626402">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/7c78b12691f2b2a94639b7674eba07e4.png" alt="Deadpool = 6.3G" loading="lazy">
+            </div>
+            <div class="title" title="Deadpool = 6.3G">Deadpool = 6.3G</div>
+        </div>
+        <div class="card" data-title="death stranding 2 = 113.4g" data-ctime="1786015332.9562225">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/thumb/c1c32a468f87e3ae33e80b860e7f9d05.jpg" alt="Death Stranding 2 = 113.4G" loading="lazy">
+            </div>
+            <div class="title" title="Death Stranding 2 = 113.4G">Death Stranding 2 = 113.4G</div>
+        </div>
+        <div class="card" data-title="detroit become human = 58.7g" data-ctime="1786094836.8651478">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/thumb/2078750ea356ba9fd472655dec36c068.jpg" alt="Detroit Become Human = 58.7G" loading="lazy">
+            </div>
+            <div class="title" title="Detroit Become Human = 58.7G">Detroit Become Human = 58.7G</div>
+        </div>
+        <div class="card" data-title="devil may cry 4 special edition = 25.0g" data-ctime="1785837658.0365882">
+            <div class="cover-wrapper">
+                <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/329050/library_600x900.jpg" alt="Devil May Cry 4 Special Edition = 25.0G" loading="lazy">
+            </div>
+            <div class="title" title="Devil May Cry 4 Special Edition = 25.0G">Devil May Cry 4 Special Edition = 25.0G</div>
+        </div>
+        <div class="card" data-title="devil may cry 5 virgil edition = 40.3g" data-ctime="1785841909.9952047">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/84bac0d19371a626d1ec02e402b1496c.png" alt="Devil May Cry 5 Virgil Edition = 40.3G" loading="lazy">
+            </div>
+            <div class="title" title="Devil May Cry 5 Virgil Edition = 40.3G">Devil May Cry 5 Virgil Edition = 40.3G</div>
+        </div>
+        <div class="card" data-title="devil may cry hd collection = 11.3g" data-ctime="1785837699.9335046">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/ed42309c46d35a08997ff7aec56f7972.png" alt="Devil May Cry HD Collection = 11.3G" loading="lazy">
+            </div>
+            <div class="title" title="Devil May Cry HD Collection = 11.3G">Devil May Cry HD Collection = 11.3G</div>
+        </div>
+        <div class="card" data-title="digimon story time stranger = 30.8g" data-ctime="1785831668.5236757">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/af3dac3069fc678d22fa4a51623c0e14.png" alt="Digimon Story Time Stranger = 30.8G" loading="lazy">
+            </div>
+            <div class="title" title="Digimon Story Time Stranger = 30.8G">Digimon Story Time Stranger = 30.8G</div>
+        </div>
+        <div class="card" data-title="doom the dark ages = 83.4g" data-ctime="1785841957.4513192">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/8ea0329e385f393ba78cf71a82c031d9.png" alt="Doom The Dark Ages = 83.4G" loading="lazy">
+            </div>
+            <div class="title" title="Doom The Dark Ages = 83.4G">Doom The Dark Ages = 83.4G</div>
+        </div>
+        <div class="card" data-title="double dragon revive = 11.2g" data-ctime="1785837757.8385">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/2d14105a756adcd89d1449ce9f71383f.png" alt="Double Dragon Revive = 11.2G" loading="lazy">
+            </div>
+            <div class="title" title="Double Dragon Revive = 11.2G">Double Dragon Revive = 11.2G</div>
+        </div>
+        <div class="card" data-title="dragon ball sparking zero = 34.7g" data-ctime="1785992895.4950397">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/e1113f40e20464469d860bef72793600.png" alt="DRAGON BALL Sparking ZERO = 34.7G" loading="lazy">
+            </div>
+            <div class="title" title="DRAGON BALL Sparking ZERO = 34.7G">DRAGON BALL Sparking ZERO = 34.7G</div>
+        </div>
+        <div class="card" data-title="dragon ball z kakarot = 117.0g" data-ctime="1786015352.675606">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/thumb/06d542e3073029dadd891a6557b869f2.jpg" alt="Dragon Ball Z Kakarot = 117.0G" loading="lazy">
+            </div>
+            <div class="title" title="Dragon Ball Z Kakarot = 117.0G">Dragon Ball Z Kakarot = 117.0G</div>
+        </div>
+        <div class="card" data-title="dying light 2 stay human re = 119.3g" data-ctime="1785837771.749337">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/a75fcb7222ddccf84b49f3b3efec8d48.png" alt="Dying Light 2 Stay Human RE = 119.3G" loading="lazy">
+            </div>
+            <div class="title" title="Dying Light 2 Stay Human RE = 119.3G">Dying Light 2 Stay Human RE = 119.3G</div>
+        </div>
+        <div class="card" data-title="dynasty warriors 8 = 24.8g" data-ctime="1785831672.182888">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/a537c315b8774b9881ff1d80c2741fe7.png" alt="Dynasty Warriors 8 = 24.8G" loading="lazy">
+            </div>
+            <div class="title" title="Dynasty Warriors 8 = 24.8G">Dynasty Warriors 8 = 24.8G</div>
+        </div>
+        <div class="card" data-title="dynasty warriors origins = 56.7g" data-ctime="1786069764.7335582">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/thumb/12a0c30325a7c1e8afa82ddec807d803.jpg" alt="Dynasty Warriors Origins = 56.7G" loading="lazy">
+            </div>
+            <div class="title" title="Dynasty Warriors Origins = 56.7G">Dynasty Warriors Origins = 56.7G</div>
+        </div>
+        <div class="card" data-title="elden ring shadow of the erdtree = 69.1g" data-ctime="1785842056.364975">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/039e0a2e69c61382675497c24a820cb3.png" alt="ELDEN RING Shadow of the Erdtree = 69.1G" loading="lazy">
+            </div>
+            <div class="title" title="ELDEN RING Shadow of the Erdtree = 69.1G">ELDEN RING Shadow of the Erdtree = 69.1G</div>
+        </div>
+        <div class="card" data-title="euro truck simulator 2 = 37.7g" data-ctime="1785831680.921296">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/712e8661e581419d7186708b7be47a33.png" alt="Euro Truck Simulator 2 = 37.7G" loading="lazy">
+            </div>
+            <div class="title" title="Euro Truck Simulator 2 = 37.7G">Euro Truck Simulator 2 = 37.7G</div>
+        </div>
+        <div class="card" data-title="evil west = 33.3g" data-ctime="1786015356.216055">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/7012f9d91ddddb00f08181a3e3b517e8.png" alt="Evil West = 33.3G" loading="lazy">
+            </div>
+            <div class="title" title="Evil West = 33.3G">Evil West = 33.3G</div>
+        </div>
+        <div class="card" data-title="expeditions - a mudrunner = 35.2g" data-ctime="1785837965.9048183">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/71f5ffe9944771444e095ff2313d8974.png" alt="Expeditions - A MudRunner = 35.2G" loading="lazy">
+            </div>
+            <div class="title" title="Expeditions - A MudRunner = 35.2G">Expeditions - A MudRunner = 35.2G</div>
+        </div>
+        <div class="card" data-title="far cry 3 = 9.2g" data-ctime="1785838008.8808">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/00c9157a614a13927382c42cc26dbfd4.png" alt="Far Cry 3 = 9.2G" loading="lazy">
+            </div>
+            <div class="title" title="Far Cry 3 = 9.2G">Far Cry 3 = 9.2G</div>
+        </div>
+        <div class="card" data-title="far cry 6 = 150.5g" data-ctime="1786341939.6178205">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/19dcd3c94aef3054d976591a8c0b9f03.png" alt="Far Cry 6 = 150.5G" loading="lazy">
+            </div>
+            <div class="title" title="Far Cry 6 = 150.5G">Far Cry 6 = 150.5G</div>
+        </div>
+        <div class="card" data-title="far cry primal = 19.6g" data-ctime="1785906700.8343768">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/fb50ca0b9070d89dec37223c0c8e8c6d.png" alt="Far Cry Primal = 19.6G" loading="lazy">
+            </div>
+            <div class="title" title="Far Cry Primal = 19.6G">Far Cry Primal = 19.6G</div>
+        </div>
+        <div class="card" data-title="fifa 19 = 33.5g" data-ctime="1785906748.636783">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/ad747448f85763e13f1b5080e211f3d5.png" alt="FIFA 19 = 33.5G" loading="lazy">
+            </div>
+            <div class="title" title="FIFA 19 = 33.5G">FIFA 19 = 33.5G</div>
+        </div>
+        <div class="card" data-title="fifa 23 = 47.2g" data-ctime="1785842138.6142745">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/75aead92f67d60ac66fcaca2c5ec2d9f.png" alt="FIFA 23 = 47.2G" loading="lazy">
+            </div>
+            <div class="title" title="FIFA 23 = 47.2G">FIFA 23 = 47.2G</div>
+        </div>
+        <div class="card" data-title="final fantasy vii rebirth = 153.4g" data-ctime="1785906176.7274659">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/e13c973f467ef2db1ac3cea5526b5b0d.jpg" alt="Final Fantasy VII Rebirth = 153.4G" loading="lazy">
+            </div>
+            <div class="title" title="Final Fantasy VII Rebirth = 153.4G">Final Fantasy VII Rebirth = 153.4G</div>
+        </div>
+        <div class="card" data-title="final fantasy vii remake = 96.8g" data-ctime="1785905908.8519275">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/2d2a62f0f4b1f5b7c40d4324e309f39c.png" alt="Final Fantasy VII Remake = 96.8G" loading="lazy">
+            </div>
+            <div class="title" title="Final Fantasy VII Remake = 96.8G">Final Fantasy VII Remake = 96.8G</div>
+        </div>
+        <div class="card" data-title="final fantasy xvi = 156.5g" data-ctime="1785832607.4215574">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/818efb7d312c7baa2a0af45c3c959837.png" alt="FINAL FANTASY XVI = 156.5G" loading="lazy">
+            </div>
+            <div class="title" title="FINAL FANTASY XVI = 156.5G">FINAL FANTASY XVI = 156.5G</div>
+        </div>
+        <div class="card" data-title="football life 26 (pes 26) = 70.8g" data-ctime="1785842196.427239">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/thumb/d61c7e5d939cef62b70f6b59fca50ae2.jpg" alt="Football Life 26 (PES 26) = 70.8G" loading="lazy">
+            </div>
+            <div class="title" title="Football Life 26 (PES 26) = 70.8G">Football Life 26 (PES 26) = 70.8G</div>
+        </div>
+        <div class="card" data-title="forza horizon 6 = 145.5g" data-ctime="1786944810.051993">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/5b8613b547316cf7808db044637edb1c.png" alt="Forza Horizon 6 = 145.5G" loading="lazy">
+            </div>
+            <div class="title" title="Forza Horizon 6 = 145.5G">Forza Horizon 6 = 145.5G</div>
+        </div>
+        <div class="card" data-title="gears 5 = 89.7g" data-ctime="1785838022.3487365">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/170c24439fecca3c09ea7adc5344d829.png" alt="Gears 5 = 89.7G" loading="lazy">
+            </div>
+            <div class="title" title="Gears 5 = 89.7G">Gears 5 = 89.7G</div>
+        </div>
+        <div class="card" data-title="ghost of tsushima director's cut = 54.1g" data-ctime="1785902929.2771318">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/3e1a813196d7bfc007bedb02c7956842.png" alt="Ghost of Tsushima DIRECTOR'S CUT = 54.1G" loading="lazy">
+            </div>
+            <div class="title" title="Ghost of Tsushima DIRECTOR'S CUT = 54.1G">Ghost of Tsushima DIRECTOR'S CUT = 54.1G</div>
+        </div>
+        <div class="card" data-title="god of war 4 (2018) = 61.9g" data-ctime="1785902990.7668657">
+            <div class="cover-wrapper">
+                <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1593500/library_600x900.jpg" alt="God Of War 4 (2018) = 61.9G" loading="lazy">
+            </div>
+            <div class="title" title="God Of War 4 (2018) = 61.9G">God Of War 4 (2018) = 61.9G</div>
+        </div>
+        <div class="card" data-title="god of war ragnarok = 160.3g" data-ctime="1785903126.192573">
+            <div class="cover-wrapper">
+                <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2322010/library_600x900.jpg" alt="God of War Ragnarok = 160.3G" loading="lazy">
+            </div>
+            <div class="title" title="God of War Ragnarok = 160.3G">God of War Ragnarok = 160.3G</div>
+        </div>
+        <div class="card" data-title="grand theft auto 4 = 22.1g" data-ctime="1785838131.7023177">
+            <div class="cover-wrapper">
+                <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/12210/library_600x900.jpg" alt="Grand Theft Auto 4 = 22.1G" loading="lazy">
+            </div>
+            <div class="title" title="Grand Theft Auto 4 = 22.1G">Grand Theft Auto 4 = 22.1G</div>
+        </div>
+        <div class="card" data-title="grand theft auto v enhanced = 91.6g" data-ctime="1785902825.6170847">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/a300cda08d24b7cf1cf45bd4eba1ae0b.jpg" alt="Grand Theft Auto V Enhanced = 91.6G" loading="lazy">
+            </div>
+            <div class="title" title="Grand Theft Auto V Enhanced = 91.6G">Grand Theft Auto V Enhanced = 91.6G</div>
+        </div>
+        <div class="card" data-title="grand theft auto v legacy = 111.2g" data-ctime="1785903322.0782185">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/af0a25e27510f77d97634a6bbe653b13.jpg" alt="Grand Theft Auto V Legacy = 111.2G" loading="lazy">
+            </div>
+            <div class="title" title="Grand Theft Auto V Legacy = 111.2G">Grand Theft Auto V Legacy = 111.2G</div>
+        </div>
+        <div class="card" data-title="grounded 2 = 33.2g" data-ctime="1786078175.36763">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/30b833400408d4136967abd6a146f828.png" alt="Grounded 2 = 33.2G" loading="lazy">
+            </div>
+            <div class="title" title="Grounded 2 = 33.2G">Grounded 2 = 33.2G</div>
+        </div>
+        <div class="card" data-title="halo campaign evolved = 74.1g" data-ctime="1785906524.5101492">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/9e00a3de909a5e4ada9324bc7aa1fea2.png" alt="Halo Campaign Evolved = 74.1G" loading="lazy">
+            </div>
+            <div class="title" title="Halo Campaign Evolved = 74.1G">Halo Campaign Evolved = 74.1G</div>
+        </div>
+        <div class="card" data-title="hitman 3 = 69.6g" data-ctime="1785906766.9398634">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/4decb3854b261cd1568a5f1800469797.png" alt="Hitman 3 = 69.6G" loading="lazy">
+            </div>
+            <div class="title" title="Hitman 3 = 69.6G">Hitman 3 = 69.6G</div>
+        </div>
+        <div class="card" data-title="hogwarts legacy = 71.2g" data-ctime="1785836758.2346804">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/43db2b7df1cff247f7efaa0e7e8d7e3c.png" alt="Hogwarts Legacy = 71.2G" loading="lazy">
+            </div>
+            <div class="title" title="Hogwarts Legacy = 71.2G">Hogwarts Legacy = 71.2G</div>
+        </div>
+        <div class="card" data-title="horizon forbidden west = 124.9g" data-ctime="1785909122.2079718">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/79dd8d1460dc545befcfa33f4087c397.png" alt="Horizon Forbidden West = 124.9G" loading="lazy">
+            </div>
+            <div class="title" title="Horizon Forbidden West = 124.9G">Horizon Forbidden West = 124.9G</div>
+        </div>
+        <div class="card" data-title="horizon zero dawn remastered = 105.5g" data-ctime="1785909466.036626">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/abd673b91e4bb9c556da84c6f6f5d470.png" alt="Horizon Zero Dawn Remastered = 105.5G" loading="lazy">
+            </div>
+            <div class="title" title="Horizon Zero Dawn Remastered = 105.5G">Horizon Zero Dawn Remastered = 105.5G</div>
+        </div>
+        <div class="card" data-title="indiana jones the great circle = 133.5g" data-ctime="1785909752.0127172">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/0e85248d5624de50ca8e01f1e9fdd5cb.png" alt="Indiana Jones The Great Circle = 133.5G" loading="lazy">
+            </div>
+            <div class="title" title="Indiana Jones The Great Circle = 133.5G">Indiana Jones The Great Circle = 133.5G</div>
+        </div>
+        <div class="card" data-title="jump force = 22.3g" data-ctime="1786167112.0056243">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/c1f0d21133d927774627f73ba2551405.png" alt="JUMP FORCE = 22.3G" loading="lazy">
+            </div>
+            <div class="title" title="JUMP FORCE = 22.3G">JUMP FORCE = 22.3G</div>
+        </div>
+        <div class="card" data-title="kena - bridge of spirits = 23.8g" data-ctime="1785903747.8601499">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/31bb08c6b213d4445affd805e46aeecc.png" alt="Kena - Bridge of Spirits = 23.8G" loading="lazy">
+            </div>
+            <div class="title" title="Kena - Bridge of Spirits = 23.8G">Kena - Bridge of Spirits = 23.8G</div>
+        </div>
+        <div class="card" data-title="kingdom come deliverance 2 = 91.2g" data-ctime="1785906539.1536984">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/thumb/26fde6337a2e96af1af76cb475d602c5.jpg" alt="Kingdom Come Deliverance 2 = 91.2G" loading="lazy">
+            </div>
+            <div class="title" title="Kingdom Come Deliverance 2 = 91.2G">Kingdom Come Deliverance 2 = 91.2G</div>
+        </div>
+        <div class="card" data-title="lego batman legacy of the dark knight = 39.2g" data-ctime="1785909011.3762746">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/e154fe98c470195b99092d884dcf71f5.jpg" alt="LEGO Batman Legacy of the Dark Knight = 39.2G" loading="lazy">
+            </div>
+            <div class="title" title="LEGO Batman Legacy of the Dark Knight = 39.2G">LEGO Batman Legacy of the Dark Knight = 39.2G</div>
+        </div>
+        <div class="card" data-title="lies of p = 60.8g" data-ctime="1785834407.3987992">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/48275392f5b7db75dbd692d35e92689c.png" alt="Lies of P = 60.8G" loading="lazy">
+            </div>
+            <div class="title" title="Lies of P = 60.8G">Lies of P = 60.8G</div>
+        </div>
+        <div class="card" data-title="mad max = 32.8g" data-ctime="1785836904.4526558">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/11146d62a6c31fb9fac8ac8ac991e08d.png" alt="Mad Max = 32.8G" loading="lazy">
+            </div>
+            <div class="title" title="Mad Max = 32.8G">Mad Max = 32.8G</div>
+        </div>
+        <div class="card" data-title="mafia definitive edition = 35.6g" data-ctime="1786093324.4325984">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/aa169f393c4e588778d07827e3c287e0.png" alt="Mafia Definitive Edition = 35.6G" loading="lazy">
+            </div>
+            <div class="title" title="Mafia Definitive Edition = 35.6G">Mafia Definitive Edition = 35.6G</div>
+        </div>
+        <div class="card" data-title="mafia the old country = 45.6g" data-ctime="1786015378.5527818">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/802bb5d12a44ebb63c0a48a5bf9ba380.png" alt="Mafia The Old Country = 45.6G" loading="lazy">
+            </div>
+            <div class="title" title="Mafia The Old Country = 45.6G">Mafia The Old Country = 45.6G</div>
+        </div>
+        <div class="card" data-title="marvel tokon fighting souls = 25.6g" data-ctime="1787049616.278139">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/714a8a77af865a55fdd1872ee975b056.png" alt="MARVEL Tokon Fighting Souls = 25.6G" loading="lazy">
+            </div>
+            <div class="title" title="MARVEL Tokon Fighting Souls = 25.6G">MARVEL Tokon Fighting Souls = 25.6G</div>
+        </div>
+        <div class="card" data-title="marvel vs capcom infinite = 58.3g" data-ctime="1786006760.172511">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/b75f9ee0bd649f044c00dfa5cf95307f.png" alt="Marvel vs Capcom Infinite = 58.3G" loading="lazy">
+            </div>
+            <div class="title" title="Marvel vs Capcom Infinite = 58.3G">Marvel vs Capcom Infinite = 58.3G</div>
+        </div>
+        <div class="card" data-title="marvels spider-man 2 = 111.2g" data-ctime="1785903775.324461">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/2572510b22e85f491270becf2fc166f7.png" alt="Marvels Spider-Man 2 = 111.2G" loading="lazy">
+            </div>
+            <div class="title" title="Marvels Spider-Man 2 = 111.2G">Marvels Spider-Man 2 = 111.2G</div>
+        </div>
+        <div class="card" data-title="marvels spider-man miles morales = 53.6g" data-ctime="1786783841.5103655">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/59c4be412494201dbe6121b901f1e446.png" alt="Marvels Spider-Man Miles Morales = 53.6G" loading="lazy">
+            </div>
+            <div class="title" title="Marvels Spider-Man Miles Morales = 53.6G">Marvels Spider-Man Miles Morales = 53.6G</div>
+        </div>
+        <div class="card" data-title="marvels spiderman remastered = 66.6g" data-ctime="1785903954.9203553">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/a85d6bc329aeaf43fe76fbb48b8b9325.png" alt="Marvels SpiderMan Remastered = 66.6G" loading="lazy">
+            </div>
+            <div class="title" title="Marvels SpiderMan Remastered = 66.6G">Marvels SpiderMan Remastered = 66.6G</div>
+        </div>
+        <div class="card" data-title="mass effect andromeda = 48.6g" data-ctime="1787116624.4643192">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/thumb/07f4dafbc9293fa6c555be969dacf4ef.jpg" alt="Mass Effect Andromeda = 48.6G" loading="lazy">
+            </div>
+            <div class="title" title="Mass Effect Andromeda = 48.6G">Mass Effect Andromeda = 48.6G</div>
+        </div>
+        <div class="card" data-title="metal gear solid delta = 118.9g" data-ctime="1785907653.9761794">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/thumb/67dffe36336093c94187f6dd9412ba89.jpg" alt="Metal Gear Solid Delta = 118.9G" loading="lazy">
+            </div>
+            <div class="title" title="Metal Gear Solid Delta = 118.9G">Metal Gear Solid Delta = 118.9G</div>
+        </div>
+        <div class="card" data-title="metro exodus = 110.1g" data-ctime="1785836944.3292632">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/45d6b5fb5d1f53e55485b07c71470a40.jpg" alt="Metro Exodus = 110.1G" loading="lazy">
+            </div>
+            <div class="title" title="Metro Exodus = 110.1G">Metro Exodus = 110.1G</div>
+        </div>
+        <div class="card" data-title="monkey king hero is back = 17.4g" data-ctime="1785834416.3201332">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/efbdfef1884dccd9d44597c70ad79f5d.png" alt="Monkey King Hero is Back = 17.4G" loading="lazy">
+            </div>
+            <div class="title" title="Monkey King Hero is Back = 17.4G">Monkey King Hero is Back = 17.4G</div>
+        </div>
+        <div class="card" data-title="mortal kombat 11 = 135.8g" data-ctime="1786427491.535794">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/6ccdf20ecd61d591ced28db9240afcd6.png" alt="Mortal Kombat 11 = 135.8G" loading="lazy">
+            </div>
+            <div class="title" title="Mortal Kombat 11 = 135.8G">Mortal Kombat 11 = 135.8G</div>
+        </div>
+        <div class="card" data-title="mortal shell ii = 68.1g" data-ctime="1787044297.9209442">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/3d2acf82fd9669dbe940b4394bde5237.png" alt="Mortal Shell II = 68.1G" loading="lazy">
+            </div>
+            <div class="title" title="Mortal Shell II = 68.1G">Mortal Shell II = 68.1G</div>
+        </div>
+        <div class="card" data-title="naruto shippuden ultimate ninja storm revolution = 7.5g" data-ctime="1785834670.5422845">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/791608b685d1c61fb2fe8acdc69dc6b5.jpg" alt="Naruto Shippuden Ultimate Ninja Storm Revolution = 7.5G" loading="lazy">
+            </div>
+            <div class="title" title="Naruto Shippuden Ultimate Ninja Storm Revolution = 7.5G">Naruto Shippuden Ultimate Ninja Storm Revolution = 7.5G</div>
+        </div>
+        <div class="card" data-title="naruto x boruto ultimate ninja storm connections" data-ctime="1788085557.4597778">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/3139617eaa43bbe573f0906a7d3a45d4.jpg" alt="NARUTO X BORUTO Ultimate Ninja STORM CONNECTIONS" loading="lazy">
+            </div>
+            <div class="title" title="NARUTO X BORUTO Ultimate Ninja STORM CONNECTIONS">NARUTO X BORUTO Ultimate Ninja STORM CONNECTIONS</div>
+        </div>
+        <div class="card" data-title="nba 2k23 = 126.5g" data-ctime="1786426778.5323293">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/46caad23bdbb5c908552dbff5ed2ed15.png" alt="NBA 2K23 = 126.5G" loading="lazy">
+            </div>
+            <div class="title" title="NBA 2K23 = 126.5G">NBA 2K23 = 126.5G</div>
+        </div>
+        <div class="card" data-title="need for speed carbon = 5.1g" data-ctime="1786419387.406646">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/thumb/8eb8c14637ad7f04b17390e3c4b16ec9.png" alt="Need for Speed Carbon = 5.1G" loading="lazy">
+            </div>
+            <div class="title" title="Need for Speed Carbon = 5.1G">Need for Speed Carbon = 5.1G</div>
+        </div>
+        <div class="card" data-title="need for speed heat = 33.7g" data-ctime="1785903709.689883">
+            <div class="cover-wrapper">
+                <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1222680/library_600x900.jpg" alt="Need for Speed Heat = 33.7G" loading="lazy">
+            </div>
+            <div class="title" title="Need for Speed Heat = 33.7G">Need for Speed Heat = 33.7G</div>
+        </div>
+        <div class="card" data-title="need for speed hot pursuit remastered = 34.7g" data-ctime="1785834728.944343">
+            <div class="cover-wrapper">
+                <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1328660/library_600x900.jpg" alt="Need for Speed Hot Pursuit Remastered = 34.7G" loading="lazy">
+            </div>
+            <div class="title" title="Need for Speed Hot Pursuit Remastered = 34.7G">Need for Speed Hot Pursuit Remastered = 34.7G</div>
+        </div>
+        <div class="card" data-title="need for speed most wanted 2005 black edition = 2.8g" data-ctime="1786358378.3137896">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/thumb/b7d110ec87a207bf18ae6f3569dff3a2.jpg" alt="Need For Speed Most Wanted 2005 Black Edition = 2.8G" loading="lazy">
+            </div>
+            <div class="title" title="Need For Speed Most Wanted 2005 Black Edition = 2.8G">Need For Speed Most Wanted 2005 Black Edition = 2.8G</div>
+        </div>
+        <div class="card" data-title="need for speed payback = 27.3g" data-ctime="1785834422.6417017">
+            <div class="cover-wrapper">
+                <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1262580/library_600x900.jpg" alt="Need for Speed Payback = 27.3G" loading="lazy">
+            </div>
+            <div class="title" title="Need for Speed Payback = 27.3G">Need for Speed Payback = 27.3G</div>
+        </div>
+        <div class="card" data-title="need for speed underground 2 = 4.0g" data-ctime="1786358146.9941714">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/thumb/8e4374a54f3a61fa403d8d70c99bca08.png" alt="Need for Speed Underground 2 = 4.0G" loading="lazy">
+            </div>
+            <div class="title" title="Need for Speed Underground 2 = 4.0G">Need for Speed Underground 2 = 4.0G</div>
+        </div>
+        <div class="card" data-title="nier - automata = 26.8g" data-ctime="1785837547.4293668">
+            <div class="cover-wrapper">
+                <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/524220/library_600x900.jpg" alt="NieR - Automata = 26.8G" loading="lazy">
+            </div>
+            <div class="title" title="NieR - Automata = 26.8G">NieR - Automata = 26.8G</div>
+        </div>
+        <div class="card" data-title="ninja gaiden 4 = 62.5g" data-ctime="1785904238.5533712">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/thumb/a91838084a7842ae32a0f2e677ca1356.jpg" alt="Ninja Gaiden 4 = 62.5G" loading="lazy">
+            </div>
+            <div class="title" title="Ninja Gaiden 4 = 62.5G">Ninja Gaiden 4 = 62.5G</div>
+        </div>
+        <div class="card" data-title="palworld = 40.3g" data-ctime="1785834429.5304854">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/d0c2b1e87b18968832aec662ff2889dd.png" alt="Palworld = 40.3G" loading="lazy">
+            </div>
+            <div class="title" title="Palworld = 40.3G">Palworld = 40.3G</div>
+        </div>
+        <div class="card" data-title="persona 5 royal = 39.6g" data-ctime="1785834422.6087065">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/78b22a52a1e53b0d2e27e6b40569793a.png" alt="Persona 5 Royal = 39.6G" loading="lazy">
+            </div>
+            <div class="title" title="Persona 5 Royal = 39.6G">Persona 5 Royal = 39.6G</div>
+        </div>
+        <div class="card" data-title="pragmata = 35.0g" data-ctime="1785904355.5769994">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/2c655140a81f8a27d57576e3bf76fb90.png" alt="Pragmata = 35.0G" loading="lazy">
+            </div>
+            <div class="title" title="Pragmata = 35.0G">Pragmata = 35.0G</div>
+        </div>
+        <div class="card" data-title="quantumbreak = 68.9g" data-ctime="1787037614.0762236">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/746fa5b27a8a3fdef80f4425117c31aa.png" alt="QuantumBreak = 68.9G" loading="lazy">
+            </div>
+            <div class="title" title="QuantumBreak = 68.9G">QuantumBreak = 68.9G</div>
+        </div>
+        <div class="card" data-title="ratchet & clank - rift apart = 48.4g" data-ctime="1785834435.580181">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/thumb/5abe467682d9d6369c022f426b4f1397.jpg" alt="Ratchet & Clank - Rift Apart = 48.4G" loading="lazy">
+            </div>
+            <div class="title" title="Ratchet & Clank - Rift Apart = 48.4G">Ratchet & Clank - Rift Apart = 48.4G</div>
+        </div>
+        <div class="card" data-title="ready or not = 48.3g" data-ctime="1785907734.7988267">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/06206ba97d1ba310284651649f66a546.png" alt="Ready or Not = 48.3G" loading="lazy">
+            </div>
+            <div class="title" title="Ready or Not = 48.3G">Ready or Not = 48.3G</div>
+        </div>
+        <div class="card" data-title="red dead redemption 2 = 119.2g" data-ctime="1786780783.7656083">
+            <div class="cover-wrapper">
+                <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1174180/library_600x900.jpg" alt="Red Dead Redemption 2 = 119.2G" loading="lazy">
+            </div>
+            <div class="title" title="Red Dead Redemption 2 = 119.2G">Red Dead Redemption 2 = 119.2G</div>
+        </div>
+        <div class="card" data-title="red dead redemption = 9.5g" data-ctime="1785905025.353553">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/94f88ceb11d0e2e52a7344dc94648c75.png" alt="Red Dead Redemption = 9.5G" loading="lazy">
+            </div>
+            <div class="title" title="Red Dead Redemption = 9.5G">Red Dead Redemption = 9.5G</div>
+        </div>
+        <div class="card" data-title="resident evil - revelations 2 = 18.1g" data-ctime="1785836467.1331165">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/e67eecf0ca844bd510ca62420eb53769.png" alt="Resident Evil - Revelations 2 = 18.1G" loading="lazy">
+            </div>
+            <div class="title" title="Resident Evil - Revelations 2 = 18.1G">Resident Evil - Revelations 2 = 18.1G</div>
+        </div>
+        <div class="card" data-title="resident evil - revelations = 7.9g" data-ctime="1785836388.6360838">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/af37c0651e1224f45466dcb8fc082b8f.png" alt="Resident Evil - Revelations = 7.9G" loading="lazy">
+            </div>
+            <div class="title" title="Resident Evil - Revelations = 7.9G">Resident Evil - Revelations = 7.9G</div>
+        </div>
+        <div class="card" data-title="resident evil 0 = 11.5g" data-ctime="1787042586.509795">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/6b0e8204da2d4a5504adcdcb7875156f.png" alt="Resident Evil 0 = 11.5G" loading="lazy">
+            </div>
+            <div class="title" title="Resident Evil 0 = 11.5G">Resident Evil 0 = 11.5G</div>
+        </div>
+        <div class="card" data-title="resident evil 2 = 23.8g" data-ctime="1786015555.7067828">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/0dcc410f031086c33eb571e62007951b.png" alt="Resident Evil 2 = 23.8G" loading="lazy">
+            </div>
+            <div class="title" title="Resident Evil 2 = 23.8G">Resident Evil 2 = 23.8G</div>
+        </div>
+        <div class="card" data-title="resident evil 3 = 23.5g" data-ctime="1786015936.6923013">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/5aa174ab24983ca1b5c461d99685a407.png" alt="Resident Evil 3 = 23.5G" loading="lazy">
+            </div>
+            <div class="title" title="Resident Evil 3 = 23.5G">Resident Evil 3 = 23.5G</div>
+        </div>
+        <div class="card" data-title="resident evil 4 = 70.5g" data-ctime="1785836617.3913243">
+            <div class="cover-wrapper">
+                <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2050650/library_600x900.jpg" alt="RESIDENT EVIL 4 = 70.5G" loading="lazy">
+            </div>
+            <div class="title" title="RESIDENT EVIL 4 = 70.5G">RESIDENT EVIL 4 = 70.5G</div>
+        </div>
+        <div class="card" data-title="resident evil 5 = 6.8g" data-ctime="1785835139.1398354">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/f44910410bd7cd5713c7dc2dc493ee64.png" alt="Resident Evil 5 = 6.8G" loading="lazy">
+            </div>
+            <div class="title" title="Resident Evil 5 = 6.8G">Resident Evil 5 = 6.8G</div>
+        </div>
+        <div class="card" data-title="resident evil 6 = 12.5g" data-ctime="1785835168.7721004">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/c19aa5f575876e11ffc5c2455550a6ee.png" alt="Resident Evil 6 = 12.5G" loading="lazy">
+            </div>
+            <div class="title" title="Resident Evil 6 = 12.5G">Resident Evil 6 = 12.5G</div>
+        </div>
+        <div class="card" data-title="resident evil 7 biohazard = 64.6g" data-ctime="1786016188.4026654">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/9474b676e28bd6b372081d0902d48de4.jpg" alt="RESIDENT EVIL 7 biohazard = 64.6G" loading="lazy">
+            </div>
+            <div class="title" title="RESIDENT EVIL 7 biohazard = 64.6G">RESIDENT EVIL 7 biohazard = 64.6G</div>
+        </div>
+        <div class="card" data-title="resident evil hd remaster" data-ctime="1787123673.5536141">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/af37c0651e1224f45466dcb8fc082b8f.png" alt="Resident Evil HD Remaster" loading="lazy">
+            </div>
+            <div class="title" title="Resident Evil HD Remaster">Resident Evil HD Remaster</div>
+        </div>
+        <div class="card" data-title="resident evil requiem = 75.8g" data-ctime="1785905044.936324">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/956adefb0eb473d0cd054107659ab6fd.jpg" alt="Resident Evil Requiem = 75.8G" loading="lazy">
+            </div>
+            <div class="title" title="Resident Evil Requiem = 75.8G">Resident Evil Requiem = 75.8G</div>
+        </div>
+        <div class="card" data-title="resident evil village = 38.2g" data-ctime="1785835263.849761">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/aa6bb53238966511d3bfb597475eb80c.jpg" alt="Resident Evil Village = 38.2G" loading="lazy">
+            </div>
+            <div class="title" title="Resident Evil Village = 38.2G">Resident Evil Village = 38.2G</div>
+        </div>
+        <div class="card" data-title="retrobat no roms = 5.2g" data-ctime="1785905130.0342662">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/1412d3e3d9a92da030d5d3fa433ca286.png" alt="RetroBat No Roms = 5.2G" loading="lazy">
+            </div>
+            <div class="title" title="RetroBat No Roms = 5.2G">RetroBat No Roms = 5.2G</div>
+        </div>
+        <div class="card" data-title="retrobat roms = 174.8g" data-ctime="1785905246.684207">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/1412d3e3d9a92da030d5d3fa433ca286.png" alt="Retrobat Roms = 174.8G" loading="lazy">
+            </div>
+            <div class="title" title="Retrobat Roms = 174.8G">Retrobat Roms = 174.8G</div>
+        </div>
+        <div class="card" data-title="ride 6 = 52.8g" data-ctime="1785835406.39283">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/fb42d382e3f99576305026d4a0da1949.jpg" alt="RIDE 6 = 52.8G" loading="lazy">
+            </div>
+            <div class="title" title="RIDE 6 = 52.8G">RIDE 6 = 52.8G</div>
+        </div>
+        <div class="card" data-title="riders republic = 26.1g" data-ctime="1786355847.617822">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/a44eb9d285f91ad6545e807e91e7d9f6.jpg" alt="Riders Republic = 26.1G" loading="lazy">
+            </div>
+            <div class="title" title="Riders Republic = 26.1G">Riders Republic = 26.1G</div>
+        </div>
+        <div class="card" data-title="rise of the tomb raider = 25.3g" data-ctime="1785906678.2139757">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/1980515e2a40690448065e854fe5f6d6.png" alt="Rise of the Tomb Raider = 25.3G" loading="lazy">
+            </div>
+            <div class="title" title="Rise of the Tomb Raider = 25.3G">Rise of the Tomb Raider = 25.3G</div>
+        </div>
+        <div class="card" data-title="roadcraft = 71.0g" data-ctime="1785835590.0580134">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/a163d51a7555c451292b12fda5d26257.png" alt="RoadCraft = 71.0G" loading="lazy">
+            </div>
+            <div class="title" title="RoadCraft = 71.0G">RoadCraft = 71.0G</div>
+        </div>
+        <div class="card" data-title="sekiro - shadows die twice = 15.6g" data-ctime="1786016595.5406332">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/97771715c7dd7daf009feeb60c49915a.png" alt="Sekiro - Shadows Die Twice = 15.6G" loading="lazy">
+            </div>
+            <div class="title" title="Sekiro - Shadows Die Twice = 15.6G">Sekiro - Shadows Die Twice = 15.6G</div>
+        </div>
+        <div class="card" data-title="senua's saga hellblade ii" data-ctime="1787194256.8405306">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/1db0fc2f95ccc900cb6d4fe1f96ab133.jpg" alt="Senua's Saga Hellblade II" loading="lazy">
+            </div>
+            <div class="title" title="Senua's Saga Hellblade II">Senua's Saga Hellblade II</div>
+        </div>
+        <div class="card" data-title="sifu = 30.5g" data-ctime="1785836030.11783">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/e24ff8d0d57d1bf2b1315673b2b896c1.jpg" alt="Sifu = 30.5G" loading="lazy">
+            </div>
+            <div class="title" title="Sifu = 30.5G">Sifu = 30.5G</div>
+        </div>
+        <div class="card" data-title="silent hill 2 remake = 34.8g" data-ctime="1785836066.956328">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/thumb/08458b92ca9b23a0297ce564d0c06198.jpg" alt="Silent Hill 2 Remake = 34.8G" loading="lazy">
+            </div>
+            <div class="title" title="Silent Hill 2 Remake = 34.8G">Silent Hill 2 Remake = 34.8G</div>
+        </div>
+        <div class="card" data-title="silent hill f = 48.1g" data-ctime="1785836108.3328156">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/836fc55095976e7a7c4df140be0ee93e.png" alt="Silent Hill f = 48.1G" loading="lazy">
+            </div>
+            <div class="title" title="Silent Hill f = 48.1G">Silent Hill f = 48.1G</div>
+        </div>
+        <div class="card" data-title="sleeping dogs - definitive edition = 16.6g" data-ctime="1785906743.6719036">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/e23689354edeb3c7a1444b1f3ae34657.png" alt="Sleeping Dogs - Definitive Edition = 16.6G" loading="lazy">
+            </div>
+            <div class="title" title="Sleeping Dogs - Definitive Edition = 16.6G">Sleeping Dogs - Definitive Edition = 16.6G</div>
+        </div>
+        <div class="card" data-title="sniper elite 4" data-ctime="1786966117.7387495">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/thumb/227cd5d22b3d53bb841d43a9aaade510.jpg" alt="Sniper Elite 4" loading="lazy">
+            </div>
+            <div class="title" title="Sniper Elite 4">Sniper Elite 4</div>
+        </div>
+        <div class="card" data-title="sniper ghost warrior 2 = 8.2g" data-ctime="1785836245.6922157">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/c9692e6592bc697bcfb17968c3888538.png" alt="Sniper Ghost Warrior 2 = 8.2G" loading="lazy">
+            </div>
+            <div class="title" title="Sniper Ghost Warrior 2 = 8.2G">Sniper Ghost Warrior 2 = 8.2G</div>
+        </div>
+        <div class="card" data-title="solo leveling arise overdrive = 44.9g" data-ctime="1786016680.5099876">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/thumb/60b7d4e8b2be10dfdd3a405226be995b.jpg" alt="Solo Leveling ARISE OVERDRIVE = 44.9G" loading="lazy">
+            </div>
+            <div class="title" title="Solo Leveling ARISE OVERDRIVE = 44.9G">Solo Leveling ARISE OVERDRIVE = 44.9G</div>
+        </div>
+        <div class="card" data-title="south of midnight = 84.5g" data-ctime="1785836256.6785667">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/f7d09ee4e7b2d5f7d700c47286b4525b.png" alt="South Of Midnight = 84.5G" loading="lazy">
+            </div>
+            <div class="title" title="South Of Midnight = 84.5G">South Of Midnight = 84.5G</div>
+        </div>
+        <div class="card" data-title="star war jedi fallen order = 56.7g" data-ctime="1785906928.783573">
+            <div class="cover-wrapper">
+                <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1172380/library_600x900.jpg" alt="Star War Jedi Fallen Order = 56.7G" loading="lazy">
+            </div>
+            <div class="title" title="Star War Jedi Fallen Order = 56.7G">Star War Jedi Fallen Order = 56.7G</div>
+        </div>
+        <div class="card" data-title="star war jedi survivor = 129.9g" data-ctime="1785834403.9001603">
+            <div class="cover-wrapper">
+                <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1774580/library_600x900.jpg" alt="Star War Jedi Survivor = 129.9G" loading="lazy">
+            </div>
+            <div class="title" title="Star War Jedi Survivor = 129.9G">Star War Jedi Survivor = 129.9G</div>
+        </div>
+        <div class="card" data-title="stellar blade = 60.5g" data-ctime="1785905557.2839794">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/f22df27d9bd4489d4f54c852bbdb21fa.jpg" alt="Stellar Blade = 60.5G" loading="lazy">
+            </div>
+            <div class="title" title="Stellar Blade = 60.5G">Stellar Blade = 60.5G</div>
+        </div>
+        <div class="card" data-title="street fighter iv = 4.3g" data-ctime="1785908071.8756044">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/2ac74624f549e19f8b2797ebbd4269ea.png" alt="Street Fighter IV = 4.3G" loading="lazy">
+            </div>
+            <div class="title" title="Street Fighter IV = 4.3G">Street Fighter IV = 4.3G</div>
+        </div>
+        <div class="card" data-title="street fighter v = 54.2g" data-ctime="1785905627.8680887">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/29d0d6e6e44c1ab6933ac3a3a0fc147f.png" alt="STREET FIGHTER V = 54.2G" loading="lazy">
+            </div>
+            <div class="title" title="STREET FIGHTER V = 54.2G">STREET FIGHTER V = 54.2G</div>
+        </div>
+        <div class="card" data-title="subnautica 2 = 14.3g" data-ctime="1785835247.5759377">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/1bad3f6cac86d3c7358b9561c80f0755.png" alt="Subnautica 2 = 14.3G" loading="lazy">
+            </div>
+            <div class="title" title="Subnautica 2 = 14.3G">Subnautica 2 = 14.3G</div>
+        </div>
+        <div class="card" data-title="suicide squad kill the justice league = 97.4g" data-ctime="1786070474.9255757">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/28e2ba809827a093a6e7df960c5b227a.jpg" alt="Suicide Squad Kill the Justice League = 97.4G" loading="lazy">
+            </div>
+            <div class="title" title="Suicide Squad Kill the Justice League = 97.4G">Suicide Squad Kill the Justice League = 97.4G</div>
+        </div>
+        <div class="card" data-title="tekken 8 = 127.9g" data-ctime="1785905689.4824605">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/a9283100ad06971a29f5382f6ab25ea4.jpg" alt="TEKKEN 8 = 127.9G" loading="lazy">
+            </div>
+            <div class="title" title="TEKKEN 8 = 127.9G">TEKKEN 8 = 127.9G</div>
+        </div>
+        <div class="card" data-title="the crew 2 = 35.4g" data-ctime="1785835319.6515608">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/c1eb9116b4d363a26d64b84393e1227b.png" alt="The Crew 2 = 35.4G" loading="lazy">
+            </div>
+            <div class="title" title="The Crew 2 = 35.4G">The Crew 2 = 35.4G</div>
+        </div>
+        <div class="card" data-title="the first berserker khazan = 52.7g" data-ctime="1785906801.8065124">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/87f22ef7349f8bc783fbaecb30429e4b.png" alt="The First Berserker Khazan = 52.7G" loading="lazy">
+            </div>
+            <div class="title" title="The First Berserker Khazan = 52.7G">The First Berserker Khazan = 52.7G</div>
+        </div>
+        <div class="card" data-title="the king of fighters xiii global match = 2.4g" data-ctime="1785906928.1441174">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/cf1a190d3be78a111e96178275572493.png" alt="THE KING OF FIGHTERS XIII GLOBAL MATCH = 2.4G" loading="lazy">
+            </div>
+            <div class="title" title="THE KING OF FIGHTERS XIII GLOBAL MATCH = 2.4G">THE KING OF FIGHTERS XIII GLOBAL MATCH = 2.4G</div>
+        </div>
+        <div class="card" data-title="the king of fighters xv = 48.6g" data-ctime="1785904282.061494">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/ec9be577c5bbe0b6711c2d6b499e393f.jpg" alt="THE KING OF FIGHTERS XV = 48.6G" loading="lazy">
+            </div>
+            <div class="title" title="THE KING OF FIGHTERS XV = 48.6G">THE KING OF FIGHTERS XV = 48.6G</div>
+        </div>
+        <div class="card" data-title="the last of us - part 1 = 63.1g" data-ctime="1785904370.0515337">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/849d7b8124e44421cf640466299db4dc.png" alt="The Last of Us - Part 1 = 63.1G" loading="lazy">
+            </div>
+            <div class="title" title="The Last of Us - Part 1 = 63.1G">The Last of Us - Part 1 = 63.1G</div>
+        </div>
+        <div class="card" data-title="the last of us - part ii remastered = 81.4g" data-ctime="1785904473.1080036">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/f3949fa34208fe26a430aed32434ebc8.jpg" alt="The Last of Us - Part II Remastered = 81.4G" loading="lazy">
+            </div>
+            <div class="title" title="The Last of Us - Part II Remastered = 81.4G">The Last of Us - Part II Remastered = 81.4G</div>
+        </div>
+        <div class="card" data-title="the sims 4 = 78.7g" data-ctime="1785906971.6701643">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/a640c4c3b40bbed296fe445e21af4984.png" alt="The Sims 4 = 78.7G" loading="lazy">
+            </div>
+            <div class="title" title="The Sims 4 = 78.7G">The Sims 4 = 78.7G</div>
+        </div>
+        <div class="card" data-title="the witcher 3 = 52.2g" data-ctime="1785835470.3502636">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/ceca8747f717a91cfa37fe21817ccc82.png" alt="The Witcher 3 = 52.2G" loading="lazy">
+            </div>
+            <div class="title" title="The Witcher 3 = 52.2G">The Witcher 3 = 52.2G</div>
+        </div>
+        <div class="card" data-title="titanfall 2 = 66.9g" data-ctime="1785907227.4862843">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/77830f686ff945a183bf945451139a54.png" alt="Titanfall 2 = 66.9G" loading="lazy">
+            </div>
+            <div class="title" title="Titanfall 2 = 66.9G">Titanfall 2 = 66.9G</div>
+        </div>
+        <div class="card" data-title="tom clancys ghost recon wildlands = 82.2g" data-ctime="1785907344.1915717">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/fcea6e920ac9ff8934f06477582922c1.png" alt="Tom Clancys Ghost Recon Wildlands = 82.2G" loading="lazy">
+            </div>
+            <div class="title" title="Tom Clancys Ghost Recon Wildlands = 82.2G">Tom Clancys Ghost Recon Wildlands = 82.2G</div>
+        </div>
+        <div class="card" data-title="tomb raider definitive edition = 24.1g" data-ctime="1785835673.9054153">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/87368138229b6995db6b5c482f90a5bf.jpg" alt="Tomb Raider Definitive Edition = 24.1G" loading="lazy">
+            </div>
+            <div class="title" title="Tomb Raider Definitive Edition = 24.1G">Tomb Raider Definitive Edition = 24.1G</div>
+        </div>
+        <div class="card" data-title="ultra street fighter iv = 15.3g" data-ctime="1786016180.5493915">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/9a8da182a6185560f43cda94c19017eb.png" alt="Ultra Street Fighter IV = 15.3G" loading="lazy">
+            </div>
+            <div class="title" title="Ultra Street Fighter IV = 15.3G">Ultra Street Fighter IV = 15.3G</div>
+        </div>
+        <div class="card" data-title="uncharted legacy of thieves collection = 124.1g" data-ctime="1785904565.9633453">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/eae7437c8206a4f30a3c676e49cb9037.jpg" alt="Uncharted Legacy of Thieves Collection = 124.1G" loading="lazy">
+            </div>
+            <div class="title" title="Uncharted Legacy of Thieves Collection = 124.1G">Uncharted Legacy of Thieves Collection = 124.1G</div>
+        </div>
+        <div class="card" data-title="undisputed = 17.1g" data-ctime="1785835093.985196">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/2a0a8a89f6fb3a73bc016267b027cf0e.png" alt="Undisputed = 17.1G" loading="lazy">
+            </div>
+            <div class="title" title="Undisputed = 17.1G">Undisputed = 17.1G</div>
+        </div>
+        <div class="card" data-title="warhammer 40000 space marine 2 = 83.1g" data-ctime="1785835177.4228072">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/thumb/242e5ce13b53a4b0949717c41e9bae77.jpg" alt="Warhammer 40000 Space Marine 2 = 83.1G" loading="lazy">
+            </div>
+            <div class="title" title="Warhammer 40000 Space Marine 2 = 83.1G">Warhammer 40000 Space Marine 2 = 83.1G</div>
+        </div>
+        <div class="card" data-title="warrior orochi 4 = 24.5g" data-ctime="1785835435.1224647">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/thumb/5bbc67c39fbdf1c74e28b86c595f6e4a.jpg" alt="Warrior Orochi 4 = 24.5G" loading="lazy">
+            </div>
+            <div class="title" title="Warrior Orochi 4 = 24.5G">Warrior Orochi 4 = 24.5G</div>
+        </div>
+        <div class="card" data-title="watch dogs 2 = 47.4g" data-ctime="1785835534.9692242">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/8757d7e24549036de3f2d715b2c06018.jpg" alt="Watch Dogs 2 = 47.4G" loading="lazy">
+            </div>
+            <div class="title" title="Watch Dogs 2 = 47.4G">Watch Dogs 2 = 47.4G</div>
+        </div>
+        <div class="card" data-title="wo long - fallen dynasty = 59.7g" data-ctime="1785835704.0743175">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/77f2de998d291ded2573171c666b5565.jpg" alt="Wo Long - Fallen Dynasty = 59.7G" loading="lazy">
+            </div>
+            <div class="title" title="Wo Long - Fallen Dynasty = 59.7G">Wo Long - Fallen Dynasty = 59.7G</div>
+        </div>
+        <div class="card" data-title="world war z - aftermath = 66.7g" data-ctime="1786017100.1271849">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/4b0732dd2e072509479e21645ba653b3.png" alt="World War Z - Aftermath = 66.7G" loading="lazy">
+            </div>
+            <div class="title" title="World War Z - Aftermath = 66.7G">World War Z - Aftermath = 66.7G</div>
+        </div>
+        <div class="card" data-title="wuchang fallen feathers = 60.9g" data-ctime="1785904706.1681013">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/thumb/da30e69e8d19849322b8f66692de6ce8.jpg" alt="Wuchang Fallen Feathers = 60.9G" loading="lazy">
+            </div>
+            <div class="title" title="Wuchang Fallen Feathers = 60.9G">Wuchang Fallen Feathers = 60.9G</div>
+        </div>
+        <div class="card" data-title="wwe 2k19 = 49.0g" data-ctime="1785907447.600076">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/37b4c628adfaf121d8156071d9d1fead.png" alt="WWE 2K19 = 49.0G" loading="lazy">
+            </div>
+            <div class="title" title="WWE 2K19 = 49.0G">WWE 2K19 = 49.0G</div>
+        </div>
+        <div class="card" data-title="wwe 2k25 = 102.3g" data-ctime="1785904775.641235">
+            <div class="cover-wrapper">
+                <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2315690/library_600x900.jpg" alt="WWE 2K25 = 102.3G" loading="lazy">
+            </div>
+            <div class="title" title="WWE 2K25 = 102.3G">WWE 2K25 = 102.3G</div>
+        </div>
+        <div class="card" data-title="yakuza 0 directors cut = 86.3g" data-ctime="1786017036.0618365">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/thumb/01430ed8ef15ef59611ff5d1d6b3e196.jpg" alt="Yakuza 0 Directors Cut = 86.3G" loading="lazy">
+            </div>
+            <div class="title" title="Yakuza 0 Directors Cut = 86.3G">Yakuza 0 Directors Cut = 86.3G</div>
+        </div>
+        <div class="card" data-title="yakuza 6 - the song of life = 39.0g" data-ctime="1786346700.5527153">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/823d21584d1c5fe5ea643bc15d17251f.png" alt="Yakuza 6 - The Song of Life = 39.0G" loading="lazy">
+            </div>
+            <div class="title" title="Yakuza 6 - The Song of Life = 39.0G">Yakuza 6 - The Song of Life = 39.0G</div>
+        </div>
+        <div class="card" data-title="yakuza kiwami 2 = 60.4g" data-ctime="1786068385.953691">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/90769eb6c8aed2aa4e7ca2431188ef16.png" alt="Yakuza Kiwami 2 = 60.4G" loading="lazy">
+            </div>
+            <div class="title" title="Yakuza Kiwami 2 = 60.4G">Yakuza Kiwami 2 = 60.4G</div>
+        </div>
+        <div class="card" data-title="yakuza kiwami = 30.2g" data-ctime="1786068150.236407">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/b7f282398dc3e957350f0fd6322a33a8.png" alt="Yakuza Kiwami = 30.2G" loading="lazy">
+            </div>
+            <div class="title" title="Yakuza Kiwami = 30.2G">Yakuza Kiwami = 30.2G</div>
+        </div>
+        <div class="card" data-title="art of rally = 6.9g" data-ctime="1786864545.9560583">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/fba1a0d3b70941da7554cdf868f0db32.png" alt="Art of rally = 6.9G" loading="lazy">
+            </div>
+            <div class="title" title="Art of rally = 6.9G">Art of rally = 6.9G</div>
+        </div>
+        <div class="card" data-title="avatar legends the fighting game" data-ctime="1787824164.6684024">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/438c87f8f4d6d4b0c01c1aa8027033bb.png" alt="Avatar Legends The Fighting Game" loading="lazy">
+            </div>
+            <div class="title" title="Avatar Legends The Fighting Game">Avatar Legends The Fighting Game</div>
+        </div>
+        <div class="card" data-title="balatro = 64.0m" data-ctime="1786864571.053055">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/d70b4d9fdf0af0a00814b91fa82b3d4c.png" alt="Balatro = 64.0M" loading="lazy">
+            </div>
+            <div class="title" title="Balatro = 64.0M">Balatro = 64.0M</div>
+        </div>
+        <div class="card" data-title="battletoads = 10.5g" data-ctime="1786087104.8024848">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/d2adc3dfcae845b31b0b9fd80cc4469b.png" alt="Battletoads = 10.5G" loading="lazy">
+            </div>
+            <div class="title" title="Battletoads = 10.5G">Battletoads = 10.5G</div>
+        </div>
+        <div class="card" data-title="ben 10 - power trip = 1.7g" data-ctime="1786086343.5794373">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/thumb/0052069db1a0017f6a27f27e6dcbb919.png" alt="Ben 10 - Power Trip = 1.7G" loading="lazy">
+            </div>
+            <div class="title" title="Ben 10 - Power Trip = 1.7G">Ben 10 - Power Trip = 1.7G</div>
+        </div>
+        <div class="card" data-title="ben 10 = 2.5g" data-ctime="1786086407.682838">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/fa9fea0b7b45adf3f5fed9c853f467a6.png" alt="Ben 10 = 2.5G" loading="lazy">
+            </div>
+            <div class="title" title="Ben 10 = 2.5G">Ben 10 = 2.5G</div>
+        </div>
+        <div class="card" data-title="contra operation galuga = 13.6g" data-ctime="1786003493.4445977">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/thumb/17bf4a02b4a256b6d9017bb1010ba3ac.jpg" alt="Contra Operation Galuga = 13.6G" loading="lazy">
+            </div>
+            <div class="title" title="Contra Operation Galuga = 13.6G">Contra Operation Galuga = 13.6G</div>
+        </div>
+        <div class="card" data-title="contra rogue corps = 11.4g" data-ctime="1785831294.3817806">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/thumb/04b640e726275b27c5eb420beb9ee54f.jpg" alt="Contra Rogue Corps = 11.4G" loading="lazy">
+            </div>
+            <div class="title" title="Contra Rogue Corps = 11.4G">Contra Rogue Corps = 11.4G</div>
+        </div>
+        <div class="card" data-title="cuphead = 5.4g" data-ctime="1785830961.5951045">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/25dcf1554f13c36b512dfe907acc77d3.png" alt="Cuphead = 5.4G" loading="lazy">
+            </div>
+            <div class="title" title="Cuphead = 5.4G">Cuphead = 5.4G</div>
+        </div>
+        <div class="card" data-title="deep rock galactic - survivor = 4.0g" data-ctime="1785902796.9968908">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/9c8d8b6698dd0dc195d35179f7e27543.png" alt="Deep Rock Galactic - Survivor = 4.0G" loading="lazy">
+            </div>
+            <div class="title" title="Deep Rock Galactic - Survivor = 4.0G">Deep Rock Galactic - Survivor = 4.0G</div>
+        </div>
+        <div class="card" data-title="dispatch = 17.1g" data-ctime="1785837715.2793455">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/thumb/33091a1cbb639483231e7bd0a030d6f9.jpg" alt="Dispatch = 17.1G" loading="lazy">
+            </div>
+            <div class="title" title="Dispatch = 17.1G">Dispatch = 17.1G</div>
+        </div>
+        <div class="card" data-title="hades ii = 16.2g" data-ctime="1786864384.681393">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/thumb/b2c6c5b4f6992b115368bcb678c4662a.jpg" alt="Hades II = 16.2G" loading="lazy">
+            </div>
+            <div class="title" title="Hades II = 16.2G">Hades II = 16.2G</div>
+        </div>
+        <div class="card" data-title="hades = 11.1g" data-ctime="1785836731.8849678">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/thumb/bfe339860b048949369fc6945cea504d.jpg" alt="Hades = 11.1G" loading="lazy">
+            </div>
+            <div class="title" title="Hades = 11.1G">Hades = 11.1G</div>
+        </div>
+        <div class="card" data-title="hollow knight silksong = 8.6g" data-ctime="1785836855.785715">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/thumb/352b19056ce934568b956d68cbcde3b5.jpg" alt="Hollow Knight Silksong = 8.6G" loading="lazy">
+            </div>
+            <div class="title" title="Hollow Knight Silksong = 8.6G">Hollow Knight Silksong = 8.6G</div>
+        </div>
+        <div class="card" data-title="hollow knight = 4.9g" data-ctime="1785836843.6262872">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/d18c832e8c956b4ef8b92862e6bf470d.png" alt="Hollow Knight = 4.9G" loading="lazy">
+            </div>
+            <div class="title" title="Hollow Knight = 4.9G">Hollow Knight = 4.9G</div>
+        </div>
+        <div class="card" data-title="little nightmares ii = 8.8g" data-ctime="1785834477.9347417">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/4d2554ec6ec43dfe2aadaf819101091c.png" alt="Little Nightmares II = 8.8G" loading="lazy">
+            </div>
+            <div class="title" title="Little Nightmares II = 8.8G">Little Nightmares II = 8.8G</div>
+        </div>
+        <div class="card" data-title="little nightmares iii = 14.8g" data-ctime="1785836878.2939885">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/393ca095fe6861771123648b9ddbdf43.png" alt="Little Nightmares III = 14.8G" loading="lazy">
+            </div>
+            <div class="title" title="Little Nightmares III = 14.8G">Little Nightmares III = 14.8G</div>
+        </div>
+        <div class="card" data-title="little nightmares = 9.1g" data-ctime="1785834411.4248903">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/c39bfb2804dded8db959a0c87d483072.jpg" alt="Little Nightmares = 9.1G" loading="lazy">
+            </div>
+            <div class="title" title="Little Nightmares = 9.1G">Little Nightmares = 9.1G</div>
+        </div>
+        <div class="card" data-title="megabonk = 507.2m" data-ctime="1786864474.9925368">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/07e0ffce6d78f826401adf7e5b92c6e5.png" alt="Megabonk = 507.2M" loading="lazy">
+            </div>
+            <div class="title" title="Megabonk = 507.2M">Megabonk = 507.2M</div>
+        </div>
+        <div class="card" data-title="metal gear solid 4 guns of the patriots master collection version = 22.9g" data-ctime="1788145725.0823257">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/thumb/a634d1d7af940834c11c37d693c4784e.jpg" alt="METAL GEAR SOLID 4 Guns of the Patriots Master Collection Version = 22.9G" loading="lazy">
+            </div>
+            <div class="title" title="METAL GEAR SOLID 4 Guns of the Patriots Master Collection Version = 22.9G">METAL GEAR SOLID 4 Guns of the Patriots Master Collection Version = 22.9G</div>
+        </div>
+        <div class="card" data-title="metal gear solid peace walker master collection version = 19.9g" data-ctime="1788145792.1688082">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/thumb/458eaaba1974eea6688a8dabfbea89c6.jpg" alt="METAL GEAR SOLID Peace Walker Master Collection Version = 19.9G" loading="lazy">
+            </div>
+            <div class="title" title="METAL GEAR SOLID Peace Walker Master Collection Version = 19.9G">METAL GEAR SOLID Peace Walker Master Collection Version = 19.9G</div>
+        </div>
+        <div class="card" data-title="mouse pi fh = 10.3g" data-ctime="1785837445.701674">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/thumb/479ce9c547f4764aa6bde6eaa4a7e874.jpg" alt="MOUSE PI FH = 10.3G" loading="lazy">
+            </div>
+            <div class="title" title="MOUSE PI FH = 10.3G">MOUSE PI FH = 10.3G</div>
+        </div>
+        <div class="card" data-title="mushroom wars 2 episode 3 red and furious" data-ctime="1787814327.177927">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/ce842c8ae5bb4623c52849b0320533a7.png" alt="Mushroom Wars 2 Episode 3 Red and Furious" loading="lazy">
+            </div>
+            <div class="title" title="Mushroom Wars 2 Episode 3 Red and Furious">Mushroom Wars 2 Episode 3 Red and Furious</div>
+        </div>
+        <div class="card" data-title="nba 2k27 = 102g" data-ctime="1787976024.8373878">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/41f111384c98a213f4b187cf3e952245.png" alt="NBA 2K27 = 102G" loading="lazy">
+            </div>
+            <div class="title" title="NBA 2K27 = 102G">NBA 2K27 = 102G</div>
+        </div>
+        <div class="card" data-title="octopath traveler 0 = 6.5g" data-ctime="1785837580.6313198">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/08f95b09730ae981ff350b9a08b6a84e.jpg" alt="OCTOPATH TRAVELER 0 = 6.5G" loading="lazy">
+            </div>
+            <div class="title" title="OCTOPATH TRAVELER 0 = 6.5G">OCTOPATH TRAVELER 0 = 6.5G</div>
+        </div>
+        <div class="card" data-title="pvz replanted = 1.6g" data-ctime="1785836368.5722094">
+            <div class="cover-wrapper">
+                <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3590/library_600x900.jpg" alt="PVZ Replanted = 1.6G" loading="lazy">
+            </div>
+            <div class="title" title="PVZ Replanted = 1.6G">PVZ Replanted = 1.6G</div>
+        </div>
+        <div class="card" data-title="r-type dimensions iii = 5.0g" data-ctime="1785835838.1496625">
+            <div class="cover-wrapper">
+                <img src="https://shared.steamstatic.com/store_item_assets/steam/apps/4165620/12a389b640b4c4db2a84d4edc1848c559604876a/library_capsule_2x.jpg?t=1779191295" alt="R-Type Dimensions III = 5.0G" loading="lazy">
+            </div>
+            <div class="title" title="R-Type Dimensions III = 5.0G">R-Type Dimensions III = 5.0G</div>
+        </div>
+        <div class="card" data-title="r-type tactics i and ii cosmos = 19.2g" data-ctime="1785835851.51166">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/1de1b2f7beff30709f8aa4354c3d1f6f.png" alt="R-Type Tactics I and II Cosmos = 19.2G" loading="lazy">
+            </div>
+            <div class="title" title="R-Type Tactics I and II Cosmos = 19.2G">R-Type Tactics I and II Cosmos = 19.2G</div>
+        </div>
+        <div class="card" data-title="reanimal = 14.4g" data-ctime="1785836370.9851604">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/88f9e4d4cea5c725f2501a27c8842f71.png" alt="REANIMAL = 14.4G" loading="lazy">
+            </div>
+            <div class="title" title="REANIMAL = 14.4G">REANIMAL = 14.4G</div>
+        </div>
+        <div class="card" data-title="replaced = 6.5g" data-ctime="1785905036.659813">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/6dd7369dbb8e16e3a0722510b545e2e2.png" alt="REPLACED = 6.5G" loading="lazy">
+            </div>
+            <div class="title" title="REPLACED = 6.5G">REPLACED = 6.5G</div>
+        </div>
+        <div class="card" data-title="resonance - a plague tale legacy = 75.9g" data-ctime="1787885591.2461298">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/thumb/9eecc11edb1a8dfa66274a410081fd85.jpg" alt="Resonance - A Plague Tale Legacy = 75.9G" loading="lazy">
+            </div>
+            <div class="title" title="Resonance - A Plague Tale Legacy = 75.9G">Resonance - A Plague Tale Legacy = 75.9G</div>
+        </div>
+        <div class="card" data-title="rune factory 5 = 8.6g" data-ctime="1785835886.6929104">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/f44643a0a20088e4a93a3c553c26e05d.png" alt="Rune Factory 5 = 8.6G" loading="lazy">
+            </div>
+            <div class="title" title="Rune Factory 5 = 8.6G">Rune Factory 5 = 8.6G</div>
+        </div>
+        <div class="card" data-title="slay the spire 2 = 2.8g" data-ctime="1786864478.07589">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/3b8a2395c9d71ba8fd80df1c4e02d4d4.png" alt="Slay the Spire 2 = 2.8G" loading="lazy">
+            </div>
+            <div class="title" title="Slay the Spire 2 = 2.8G">Slay the Spire 2 = 2.8G</div>
+        </div>
+        <div class="card" data-title="slay the spire = 516.4m" data-ctime="1786864500.996513">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/9ad067558ea2bd2a1239bfa2da998146.png" alt="Slay the Spire = 516.4M" loading="lazy">
+            </div>
+            <div class="title" title="Slay the Spire = 516.4M">Slay the Spire = 516.4M</div>
+        </div>
+        <div class="card" data-title="star wars zero company = 39.7g" data-ctime="1788145368.2073786">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/thumb/75d8e84292296f1d00ba61471c8a7e5d.jpg" alt="STAR WARS Zero Company = 39.7G" loading="lazy">
+            </div>
+            <div class="title" title="STAR WARS Zero Company = 39.7G">STAR WARS Zero Company = 39.7G</div>
+        </div>
+        <div class="card" data-title="stardew valley = 660.2m" data-ctime="1785836358.522336">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/cf30b40a1573a32248fcd0ba94e67652.png" alt="Stardew Valley = 660.2M" loading="lazy">
+            </div>
+            <div class="title" title="Stardew Valley = 660.2M">Stardew Valley = 660.2M</div>
+        </div>
+        <div class="card" data-title="story of seasons grand bazaar = 5.2g" data-ctime="1785835110.076233">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/985cd530b05fedb31e19942803d8c9ab.png" alt="Story of Seasons Grand Bazaar = 5.2G" loading="lazy">
+            </div>
+            <div class="title" title="Story of Seasons Grand Bazaar = 5.2G">Story of Seasons Grand Bazaar = 5.2G</div>
+        </div>
+        <div class="card" data-title="story of seasons pioneers of olive town = 1.5g" data-ctime="1785835148.6728182">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/985cd530b05fedb31e19942803d8c9ab.png" alt="Story of Seasons Pioneers of Olive Town = 1.5G" loading="lazy">
+            </div>
+            <div class="title" title="Story of Seasons Pioneers of Olive Town = 1.5G">Story of Seasons Pioneers of Olive Town = 1.5G</div>
+        </div>
+        <div class="card" data-title="stray = 6.2g" data-ctime="1785835210.5419319">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/5792570eae5e9fd09de1927180ff513c.png" alt="Stray = 6.2G" loading="lazy">
+            </div>
+            <div class="title" title="Stray = 6.2G">Stray = 6.2G</div>
+        </div>
+        <div class="card" data-title="streets of rage 4 = 6.1g" data-ctime="1785835228.1020923">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/thumb/918aa00f7eba30a0913c9ba9a3557a27.jpg" alt="Streets of Rage 4 = 6.1G" loading="lazy">
+            </div>
+            <div class="title" title="Streets of Rage 4 = 6.1G">Streets of Rage 4 = 6.1G</div>
+        </div>
+        <div class="card" data-title="teenage mutant ninja turtles arcade wrath of the mutants = 6.6g" data-ctime="1786086963.194164">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/thumb/a4a3f62dbff5c379b923f3109303cdf9.jpg" alt="Teenage Mutant Ninja Turtles Arcade Wrath Of The Mutants = 6.6G" loading="lazy">
+            </div>
+            <div class="title" title="Teenage Mutant Ninja Turtles Arcade Wrath Of The Mutants = 6.6G">Teenage Mutant Ninja Turtles Arcade Wrath Of The Mutants = 6.6G</div>
+        </div>
+        <div class="card" data-title="teenage mutant ninja turtles mutants in manhattan = 7.6g" data-ctime="1786086000.7664106">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/4167d392001bdfc40720b2c71be2d43d.png" alt="Teenage Mutant Ninja Turtles Mutants in Manhattan = 7.6G" loading="lazy">
+            </div>
+            <div class="title" title="Teenage Mutant Ninja Turtles Mutants in Manhattan = 7.6G">Teenage Mutant Ninja Turtles Mutants in Manhattan = 7.6G</div>
+        </div>
+        <div class="card" data-title="teenage mutant ninja turtles splintered fate = 2.9g" data-ctime="1786615096.1986923">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/thumb/7710de5850bb1676e55a7c6b943edcd6.jpg" alt="Teenage Mutant Ninja Turtles Splintered Fate = 2.9G" loading="lazy">
+            </div>
+            <div class="title" title="Teenage Mutant Ninja Turtles Splintered Fate = 2.9G">Teenage Mutant Ninja Turtles Splintered Fate = 2.9G</div>
+        </div>
+        <div class="card" data-title="terraria = 765.3m" data-ctime="1786869632.5524924">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/9ef7f9b81c2532880cfe5cf53f0c906d.png" alt="Terraria = 765.3M" loading="lazy">
+            </div>
+            <div class="title" title="Terraria = 765.3M">Terraria = 765.3M</div>
+        </div>
+        <div class="card" data-title="tetris effect connected = 5.7g" data-ctime="1785835297.1957119">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/5ed6a5e2ae1fb654c27be4095e2c51cf.jpg" alt="Tetris Effect Connected = 5.7G" loading="lazy">
+            </div>
+            <div class="title" title="Tetris Effect Connected = 5.7G">Tetris Effect Connected = 5.7G</div>
+        </div>
+        <div class="card" data-title="the sinking city 2 = 48.6g" data-ctime="1787565904.496331">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/248165d877531f51e644ab6e7d53755b.png" alt="The Sinking City 2 = 48.6G" loading="lazy">
+            </div>
+            <div class="title" title="The Sinking City 2 = 48.6G">The Sinking City 2 = 48.6G</div>
+        </div>
+        <div class="card" data-title="the takeover = 3.8g" data-ctime="1785835452.096983">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/d25e982f83e5b53257225d38c934dce5.jpg" alt="The TakeOver = 3.8G" loading="lazy">
+            </div>
+            <div class="title" title="The TakeOver = 3.8G">The TakeOver = 3.8G</div>
+        </div>
+        <div class="card" data-title="tmnt - mutants unleashed = 26.9g" data-ctime="1786351852.4604788">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/thumb/abcfe1a224ab051aa9a240ffe77b111c.jpg" alt="TMNT - Mutants Unleashed = 26.9G" loading="lazy">
+            </div>
+            <div class="title" title="TMNT - Mutants Unleashed = 26.9G">TMNT - Mutants Unleashed = 26.9G</div>
+        </div>
+        <div class="card" data-title="tmnt shredder revenge = 737.2m" data-ctime="1786613838.2948773">
+            <div class="cover-wrapper">
+                <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1361510/library_600x900.jpg" alt="TMNT Shredder Revenge = 737.2M" loading="lazy">
+            </div>
+            <div class="title" title="TMNT Shredder Revenge = 737.2M">TMNT Shredder Revenge = 737.2M</div>
+        </div>
+        <div class="card" data-title="vampire survivors = 1.6g" data-ctime="1786864535.8561573">
+            <div class="cover-wrapper">
+                <img src="https://cdn2.steamgriddb.com/grid/b6c580b0ed08cf19c925be5a68475cd4.jpg" alt="Vampire Survivors = 1.6G" loading="lazy">
+            </div>
+            <div class="title" title="Vampire Survivors = 1.6G">Vampire Survivors = 1.6G</div>
+        </div>
+    </div>
+
+    <footer>
+        PC Accessories &amp; Modification
+    </footer>
+
+    <script>
+        let currentTab = 'all';
+
+        function updateCount() {
+            const visibleCards = document.querySelectorAll('.card[style*="display: flex"]');
+            document.getElementById('count').innerText = visibleCards.length;
+        }
+
+        function sortCards(mode) {
+            const grid = document.getElementById('gameGrid');
+            const cards = Array.from(grid.children);
+
+            cards.sort((a, b) => {
+                if (mode === 'recent') {
+                    return parseFloat(b.getAttribute('data-ctime')) - parseFloat(a.getAttribute('data-ctime'));
+                } else {
+                    return a.getAttribute('data-title').localeCompare(b.getAttribute('data-title'));
+                }
+            });
+
+            cards.forEach(card => grid.appendChild(card));
+        }
+
+        function switchTab(tab) {
+            currentTab = tab;
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('tab-' + tab).classList.add('active');
+            
+            sortCards(tab);
+            filterGames();
+        }
+
+        function filterGames() {
+            const query = document.getElementById('search').value.toLowerCase();
+            const cards = document.querySelectorAll('.card');
+
+            cards.forEach(card => {
+                const title = card.getAttribute('data-title');
+                const matchesSearch = title.includes(query);
+                card.style.display = matchesSearch ? "flex" : "none";
+            });
+
+            updateCount();
+        }
+
+        switchTab('all');
+    </script>
+</body>
+</html>
