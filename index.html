@@ -1532,59 +1532,92 @@
             document.getElementById('totalSize').innerText = formatBytes(totalBytes);
         }
 
-        async function sendOrderToTelegram() {
-            const checkboxes = document.querySelectorAll('.card-checkbox:checked');
-            if (checkboxes.length === 0) {
-                alert("Please select at least one game.");
-                return;
-            }
+      const MAX_DAILY_ORDERS = 3;
 
-            const selectedGames = Array.from(checkboxes).map(cb => cb.getAttribute('data-rawtitle'));
-            const totalSize = document.getElementById('totalSize').innerText;
-
-            const user = tg?.initDataUnsafe?.user;
-            let customerName = user ? `${user.first_name || ''} ${user.last_name || ''}`.trim() : '';
-
-            if (!customerName) customerName = prompt("Please enter your name for the order:", "");
-            if (!customerName) return alert("Name is required.");
-
-            const username = user?.username ? `@${user.username}` : 'N/A';
-            const btn = document.getElementById('submitBtn');
-            btn.innerText = "Sending...";
-            btn.disabled = true;
-
-            const message = `🚨 <b>NEW GAME ORDER!</b>\n\n` +
-                `👤 <b>Customer:</b> ${customerName}\n` +
-                `💬 <b>Telegram User:</b> ${username}\n` +
-                `📦 <b>Total Games:</b> ${selectedGames.length}\n` +
-                `💾 <b>Total Size:</b> ${totalSize}\n\n` +
-                `🎮 <b>Games Selected:</b>\n` + selectedGames.map(g => `• ${g}`).join('\n');
-
-            try {
-                const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        chat_id: ADMIN_CHAT_ID,
-                        text: message,
-                        parse_mode: 'HTML'
-                    })
-                });
-
-                if (res.ok) {
-                    alert("✅ Order placed successfully!");
-                    if (tg) tg.close();
-                } else {
-                    alert("❌ Failed to send order. Check Bot Token & Chat ID.");
-                }
-            } catch (e) {
-                alert("Error sending order: " + e.message);
-            } finally {
-                btn.innerText = "Send Order";
-                btn.disabled = false;
-            }
+function getOrderTracker() {
+    const today = new Date().toISOString().split('T')[0]; // "YYYY-MM-DD"
+    const saved = localStorage.getItem('order_tracker');
+    
+    if (saved) {
+        const data = JSON.parse(saved);
+        // Reset counter if it's a new day
+        if (data.date === today) {
+            return data;
         }
+    }
+    return { date: today, count: 0 };
+}
 
+function incrementOrderCount() {
+    const tracker = getOrderTracker();
+    tracker.count += 1;
+    localStorage.setItem('order_tracker', JSON.stringify(tracker));
+    return tracker.count;
+}
+
+async function sendOrderToTelegram() {
+    const tracker = getOrderTracker();
+
+    // Block the submission if they already reached the daily limit
+    if (tracker.count >= MAX_DAILY_ORDERS) {
+        alert("⚠️ Daily order limit reached! You can only send up to 3 orders per day.");
+        return;
+    }
+
+    const checkboxes = document.querySelectorAll('.card-checkbox:checked');
+    if (checkboxes.length === 0) {
+        alert("Please select at least one game.");
+        return;
+    }
+
+    const selectedGames = Array.from(checkboxes).map(cb => cb.getAttribute('data-rawtitle'));
+    const totalSize = document.getElementById('totalSize').innerText;
+
+    const user = tg?.initDataUnsafe?.user;
+    let customerName = user ? `${user.first_name || ''} ${user.last_name || ''}`.trim() : '';
+
+    if (!customerName) customerName = prompt("Please enter your name for the order:", "");
+    if (!customerName) return alert("Name is required.");
+
+    const username = user?.username ? `@${user.username}` : 'N/A';
+    const btn = document.getElementById('submitBtn');
+    btn.innerText = "Sending...";
+    btn.disabled = true;
+
+    const message = `🚨 <b>NEW GAME ORDER!</b>\n\n` +
+        `👤 <b>Customer:</b> ${customerName}\n` +
+        `💬 <b>Telegram User:</b> ${username}\n` +
+        `📦 <b>Total Games:</b> ${selectedGames.length}\n` +
+        `💾 <b>Total Size:</b> ${totalSize}\n\n` +
+        `🎮 <b>Games Selected:</b>\n` + selectedGames.map(g => `• ${g}`).join('\n');
+
+    try {
+        const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                chat_id: ADMIN_CHAT_ID,
+                text: message,
+                parse_mode: 'HTML'
+            })
+        });
+
+        if (res.ok) {
+            const newCount = incrementOrderCount();
+            const remaining = MAX_DAILY_ORDERS - newCount;
+            
+            alert(`✅ Order placed successfully! You have ${remaining} order(s) left today.`);
+            if (tg) tg.close();
+        } else {
+            alert("❌ Failed to send order. Check Bot Token & Chat ID.");
+        }
+    } catch (e) {
+        alert("Error sending order: " + e.message);
+    } finally {
+        btn.innerText = "Send Order";
+        btn.disabled = false;
+    }
+}
         function updateCount() {
             document.getElementById('count').innerText = document.querySelectorAll('.card[style*="display: flex"]').length;
         }
