@@ -20,7 +20,7 @@
             color: var(--text);
             margin: 0;
             padding: 20px;
-            padding-bottom: 90px; /* Space for sticky bottom bar */
+            padding-bottom: 90px;
         }
 
         header {
@@ -129,7 +129,6 @@
             border: 2px solid transparent;
         }
 
-        /* Selected Card Styling */
         .card.selected {
             border-color: var(--accent-green);
             box-shadow: 0 0 12px rgba(0, 179, 126, 0.4);
@@ -169,7 +168,6 @@
             text-overflow: ellipsis;
         }
 
-        /* Sticky Bottom Summary Bar */
         .selection-bar {
             position: fixed;
             bottom: 0;
@@ -2778,7 +2776,6 @@
         </div>
     </div>
 
-    <!-- Sticky Live Selection Bar -->
     <div class="selection-bar">
         <div class="selection-info">
             Selected: <span id="selectedCount" style="color:var(--accent-green)">0</span> | 
@@ -2799,7 +2796,6 @@
 
         let currentTab = 'all';
 
-        // Extract bytes from title formats like "Game Title = 15.2G" or "Game Title = 1.1T"
         function parseSizeToBytes(title) {
             const match = title.match(/=\s*([\d\.]+)\s*([TGMtgm])/);
             if (!match) return 0;
@@ -2842,14 +2838,33 @@
         function sendOrderToTelegram() {
             const checkboxes = document.querySelectorAll('.card-checkbox:checked');
             if (checkboxes.length === 0) {
-                alert("Please select at least one game.");
+                if (tg && tg.showAlert) {
+                    tg.showAlert("Please select at least one game.");
+                } else {
+                    alert("Please select at least one game.");
+                }
                 return;
             }
 
             const selectedGames = Array.from(checkboxes).map(cb => cb.getAttribute('data-rawtitle'));
             const totalSize = document.getElementById('totalSize').innerText;
 
+            const user = tg?.initDataUnsafe?.user;
+            let customerName = user ? `${user.first_name || ''} ${user.last_name || ''}`.trim() : '';
+
+            if (!customerName) {
+                customerName = prompt("Please enter your name to complete the order:", "");
+            }
+
+            if (!customerName) {
+                alert("Name is required to place an order.");
+                return;
+            }
+
             const payload = {
+                customer_name: customerName,
+                username: user?.username ? `@${user.username}` : 'N/A',
+                user_id: user?.id || 'N/A',
                 games: selectedGames,
                 total_size: totalSize,
                 total_count: selectedGames.length
@@ -2857,8 +2872,9 @@
 
             if (tg && tg.sendData) {
                 tg.sendData(JSON.stringify(payload));
+                tg.close();
             } else {
-                alert("Selected " + selectedGames.length + " games (" + totalSize + ").\n\nCopy List:\n" + selectedGames.join("\n"));
+                alert("Order Summary:\nName: " + customerName + "\nGames: " + selectedGames.length + " (" + totalSize + ")\n\n" + selectedGames.join("\n"));
             }
         }
 
