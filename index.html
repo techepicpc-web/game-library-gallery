@@ -84,7 +84,7 @@
             <div class="custom-logo"></div>
             <div class="title-wrapper">
                 <h1>Game Library (<span id="count">0</span>)</h1>
-                <div class="pricing-subtitle">1 Game = 1$, 3 Games = 2$</div>
+                <div class="pricing-subtitle">1 Game = 1$, 3 Games = 2$, 10 Games = 6$</div>
             </div>
         </div>
         <input type="text" id="search" class="search-box" placeholder="Search games..." onkeyup="filterGames()">
@@ -788,6 +788,11 @@
             <div class="cover-wrapper"><img src="https://cdn2.steamgriddb.com/grid/6f5c304b81cf69a74a91dd096bbe4dc0.png" alt="Age of Empires II Definitive Edition = 85.5G" loading="lazy"></div>
             <div class="title" title="Age of Empires II Definitive Edition = 85.5G">Age of Empires II Definitive Edition = 85.5G</div>
         </div>
+        <div class="card" data-title="age of empires iii definitive edition = 48.3g" data-ctime="1789709821.7776515" data-platform="pc" data-rank="9999" onclick="toggleCardSelection(this, event)">
+            <input type="checkbox" class="card-checkbox" data-rawtitle="Age of Empires III Definitive Edition = 48.3G" onchange="updateTotalSize()">
+            <div class="cover-wrapper"><img src="https://cdn2.steamgriddb.com/grid/c24713edbee3812ec224817f152d3ef9.jpg" alt="Age of Empires III Definitive Edition = 48.3G" loading="lazy"></div>
+            <div class="title" title="Age of Empires III Definitive Edition = 48.3G">Age of Empires III Definitive Edition = 48.3G</div>
+        </div>
         <div class="card" data-title="art of rally = 6.9g" data-ctime="1788580067.0279698" data-platform="pc" data-rank="9999" onclick="toggleCardSelection(this, event)">
             <input type="checkbox" class="card-checkbox" data-rawtitle="Art of rally = 6.9G" onchange="updateTotalSize()">
             <div class="cover-wrapper"><img src="https://cdn2.steamgriddb.com/grid/fba1a0d3b70941da7554cdf868f0db32.png" alt="Art of rally = 6.9G" loading="lazy"></div>
@@ -918,6 +923,11 @@
             <div class="cover-wrapper"><img src="https://cdn2.steamgriddb.com/grid/1d91fd8cf40156dc1b696dc9359b5ddb.png" alt="DarksidersGenesis = 10.1G" loading="lazy"></div>
             <div class="title" title="DarksidersGenesis = 10.1G">DarksidersGenesis = 10.1G</div>
         </div>
+        <div class="card" data-title="dave the diver = 6.2g" data-ctime="1789710531.1039789" data-platform="pc" data-rank="9999" onclick="toggleCardSelection(this, event)">
+            <input type="checkbox" class="card-checkbox" data-rawtitle="DAVE THE DIVER = 6.2G" onchange="updateTotalSize()">
+            <div class="cover-wrapper"><img src="https://cdn2.steamgriddb.com/grid/1d50a96e0e3d7b721de8aafbb246067d.png" alt="DAVE THE DIVER = 6.2G" loading="lazy"></div>
+            <div class="title" title="DAVE THE DIVER = 6.2G">DAVE THE DIVER = 6.2G</div>
+        </div>
         <div class="card" data-title="dead cells = 2.0g" data-ctime="1788579885.5178714" data-platform="pc" data-rank="9999" onclick="toggleCardSelection(this, event)">
             <input type="checkbox" class="card-checkbox" data-rawtitle="Dead Cells = 2.0G" onchange="updateTotalSize()">
             <div class="cover-wrapper"><img src="https://cdn2.steamgriddb.com/grid/f6fa975361cfccc02b55c49305ff2bed.png" alt="Dead Cells = 2.0G" loading="lazy"></div>
@@ -932,6 +942,11 @@
             <input type="checkbox" class="card-checkbox" data-rawtitle="Deep Rock Galactic - Survivor = 4.0G" onchange="updateTotalSize()">
             <div class="cover-wrapper"><img src="https://cdn2.steamgriddb.com/grid/ac0d6e4d15e7693361c6992e6b4458c6.png" alt="Deep Rock Galactic - Survivor = 4.0G" loading="lazy"></div>
             <div class="title" title="Deep Rock Galactic - Survivor = 4.0G">Deep Rock Galactic - Survivor = 4.0G</div>
+        </div>
+        <div class="card" data-title="deliver at all costs = 8.2g" data-ctime="1789709363.2706077" data-platform="pc" data-rank="9999" onclick="toggleCardSelection(this, event)">
+            <input type="checkbox" class="card-checkbox" data-rawtitle="Deliver At All Costs = 8.2G" onchange="updateTotalSize()">
+            <div class="cover-wrapper"><img src="https://cdn2.steamgriddb.com/grid/b29b655acbfef3bffcc9d4f2ebb08ab5.png" alt="Deliver At All Costs = 8.2G" loading="lazy"></div>
+            <div class="title" title="Deliver At All Costs = 8.2G">Deliver At All Costs = 8.2G</div>
         </div>
         <div class="card" data-title="devil may cry 4 special edition = 25.0g" data-ctime="1785837658.0365882" data-platform="pc" data-rank="9999" onclick="toggleCardSelection(this, event)">
             <input type="checkbox" class="card-checkbox" data-rawtitle="Devil May Cry 4 Special Edition = 25.0G" onchange="updateTotalSize()">
@@ -1483,7 +1498,8 @@
     <div class="selection-bar">
         <div class="selection-info">
             Selected: <span id="selectedCount" style="color:var(--accent-green)">0</span> | 
-            Total Size: <span id="totalSize" style="color:var(--accent-green)">0 GB</span>
+            Total Size: <span id="totalSize" style="color:var(--accent-green)">0 GB</span> | 
+            Price: <span id="totalPrice" style="color:var(--accent-green)">0$</span>
         </div>
         <button class="send-btn" id="submitBtn" onclick="sendOrderToTelegram()">Send Order</button>
     </div>
@@ -1497,6 +1513,27 @@
         if (tg) tg.expand();
 
         let currentTab = 'all';
+
+        function calculatePrice(count) {
+            if (count === 0) return 0;
+            let total = 0;
+            let remaining = count;
+
+            // 10 games = $6 tier
+            const tens = Math.floor(remaining / 10);
+            total += tens * 6;
+            remaining %= 10;
+
+            // 3 games = $2 tier
+            const threes = Math.floor(remaining / 3);
+            total += threes * 2;
+            remaining %= 3;
+
+            // 1 game = $1 tier
+            total += remaining * 1;
+
+            return total;
+        }
 
         function parseSizeToBytes(title) {
             const match = title.match(/=\s*([\d\.]+)\s*([TGMtgm])/);
@@ -1528,96 +1565,70 @@
             const checkboxes = document.querySelectorAll('.card-checkbox:checked');
             let totalBytes = 0;
             checkboxes.forEach(cb => totalBytes += parseSizeToBytes(cb.getAttribute('data-rawtitle')));
-            document.getElementById('selectedCount').innerText = checkboxes.length;
-            document.getElementById('totalSize').innerText = formatBytes(totalBytes);
-        }
-
-      const MAX_DAILY_ORDERS = 3;
-
-function getOrderTracker() {
-    const today = new Date().toISOString().split('T')[0]; // "YYYY-MM-DD"
-    const saved = localStorage.getItem('order_tracker');
-    
-    if (saved) {
-        const data = JSON.parse(saved);
-        // Reset counter if it's a new day
-        if (data.date === today) {
-            return data;
-        }
-    }
-    return { date: today, count: 0 };
-}
-
-function incrementOrderCount() {
-    const tracker = getOrderTracker();
-    tracker.count += 1;
-    localStorage.setItem('order_tracker', JSON.stringify(tracker));
-    return tracker.count;
-}
-
-async function sendOrderToTelegram() {
-    const tracker = getOrderTracker();
-
-    // Block the submission if they already reached the daily limit
-    if (tracker.count >= MAX_DAILY_ORDERS) {
-        alert("⚠️ Daily order limit reached! You can only send up to 3 orders per day.");
-        return;
-    }
-
-    const checkboxes = document.querySelectorAll('.card-checkbox:checked');
-    if (checkboxes.length === 0) {
-        alert("Please select at least one game.");
-        return;
-    }
-
-    const selectedGames = Array.from(checkboxes).map(cb => cb.getAttribute('data-rawtitle'));
-    const totalSize = document.getElementById('totalSize').innerText;
-
-    const user = tg?.initDataUnsafe?.user;
-    let customerName = user ? `${user.first_name || ''} ${user.last_name || ''}`.trim() : '';
-
-    if (!customerName) customerName = prompt("Please enter your name for the order:", "");
-    if (!customerName) return alert("Name is required.");
-
-    const username = user?.username ? `@${user.username}` : 'N/A';
-    const btn = document.getElementById('submitBtn');
-    btn.innerText = "Sending...";
-    btn.disabled = true;
-
-    const message = `🚨 <b>NEW GAME ORDER!</b>\n\n` +
-        `👤 <b>Customer:</b> ${customerName}\n` +
-        `💬 <b>Telegram User:</b> ${username}\n` +
-        `📦 <b>Total Games:</b> ${selectedGames.length}\n` +
-        `💾 <b>Total Size:</b> ${totalSize}\n\n` +
-        `🎮 <b>Games Selected:</b>\n` + selectedGames.map(g => `• ${g}`).join('\n');
-
-    try {
-        const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                chat_id: ADMIN_CHAT_ID,
-                text: message,
-                parse_mode: 'HTML'
-            })
-        });
-
-        if (res.ok) {
-            const newCount = incrementOrderCount();
-            const remaining = MAX_DAILY_ORDERS - newCount;
             
-            alert(`✅ Order placed successfully! You have ${remaining} order(s) left today.`);
-            if (tg) tg.close();
-        } else {
-            alert("❌ Failed to send order. Check Bot Token & Chat ID.");
+            const count = checkboxes.length;
+            const price = calculatePrice(count);
+
+            document.getElementById('selectedCount').innerText = count;
+            document.getElementById('totalSize').innerText = formatBytes(totalBytes);
+            document.getElementById('totalPrice').innerText = price + '$';
         }
-    } catch (e) {
-        alert("Error sending order: " + e.message);
-    } finally {
-        btn.innerText = "Send Order";
-        btn.disabled = false;
-    }
-}
+
+        async function sendOrderToTelegram() {
+            const checkboxes = document.querySelectorAll('.card-checkbox:checked');
+            if (checkboxes.length === 0) {
+                alert("Please select at least one game.");
+                return;
+            }
+
+            const selectedGames = Array.from(checkboxes).map(cb => cb.getAttribute('data-rawtitle'));
+            const totalSize = document.getElementById('totalSize').innerText;
+            const totalPrice = document.getElementById('totalPrice').innerText;
+
+            const user = tg?.initDataUnsafe?.user;
+            let customerName = user ? `${user.first_name || ''} ${user.last_name || ''}`.trim() : '';
+
+            if (!customerName) customerName = prompt("Please enter your name for the order:", "");
+            if (!customerName) return alert("Name is required.");
+
+            const username = user?.username ? `@${user.username}` : 'N/A';
+            const btn = document.getElementById('submitBtn');
+            btn.innerText = "Sending...";
+            btn.disabled = true;
+
+            const message = `🚨 <b>NEW GAME ORDER!</b>\n\n` +
+                `👤 <b>Customer:</b> ${customerName}\n` +
+                `💬 <b>Telegram User:</b> ${username}\n` +
+                `📦 <b>Total Games:</b> ${selectedGames.length}\n` +
+                `💾 <b>Total Size:</b> ${totalSize}\n` +
+                `💵 <b>Total Price:</b> ${totalPrice}\n\n` +
+                `🎮 <b>Games Selected:</b>\n` + selectedGames.map(g => `• ${g}`).join('\n');
+
+            try {
+                const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: ADMIN_CHAT_ID,
+                        text: message,
+                        parse_mode: 'HTML'
+                    })
+                });
+
+                if (res.ok) {
+                    alert("✅ Order placed successfully!");
+                    if (tg) tg.close();
+                } else {
+                    alert("❌ Failed to send order. Check Bot Token & Chat ID.");
+                }
+            } catch (e) {
+                alert("Error sending order: " + e.message);
+            } finally {
+                btn.innerText = "Send Order";
+                btn.disabled = false;
+            }
+        }
+
         function updateCount() {
             document.getElementById('count').innerText = document.querySelectorAll('.card[style*="display: flex"]').length;
         }
